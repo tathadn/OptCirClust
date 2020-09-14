@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "OCC.h"
+#include "OC.h"
 using namespace Rcpp;
 
 //'
@@ -73,7 +73,7 @@ Rcpp::List lin_polylog_framed_clust(
     int First, int Last,
     int Prev, int Next)
 {
-  struct clustering cluster = FOCC( X, width,  K, First,  Last, Prev,  Next);
+  struct clustering cluster = FOC( X, width,  K, First,  Last, Prev,  Next);
   Rcpp::List result;
 
 
