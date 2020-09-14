@@ -1,0 +1,68 @@
+---
+title: "Circular Genome Clustering"
+author: "Tathagata Debnath and Joe Song"
+date: "Updated: 2020-09-05. Created: 2020-08-07"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Circular Genome Clustering}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Optimal versus heuristic cluster borders on CpG sites of a circular bacterial genome
+
+The fast optimal circular clustering (FOCC) and the heuristic $K$-means circular clustering algorithms are applied on the CpG sites of the Candidatus Carsonella ruddii genome (GenBank accession number CP019943.1). The CpG sites are cluster into 14 groups by both algorithms. The clustering results of both algorithms are shown. 
+
+The clusters obtained by FOCC algorithm are more compact and justifiable as compared to the HEUC ones. The cluster border between the $C8$ and $C9$ clusters of the optimal clustering are more subjectively justifiable as compared to the border between $C4$, $C8$ clusters of the heuristic clustering outcome. The cluster borders are pointed by orange arrows in the bottom of the circular genome. 
+
+Therefore, the advantage of optimal clustering over the heuristic clustering algorithm is evident in this example representing practical applications. 
+
+```{r,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}
+library(OptCirClust)
+library(ape)
+library(seqinr)
+library(micropan)
+library(bazar)
+library(knitr)
+library(reshape2)
+
+opts_chunk$set(fig.width=6, fig.height=4) 
+
+Event <- "CG"
+
+K <- 14
+
+Seq <-  read.GenBank("CP019943.1", as.character = TRUE)
+
+Seq <- toupper(concat0(c(Seq[1])))
+
+V <- gregexpr(Event ,Seq)
+
+O <- sort(V[[1]][1:length(V[[1]])])
+
+Circumference <- nchar(Seq)
+
+set.seed(1)
+
+result <- CirClust(O, K, Circumference, method = "FOCC")
+
+plot(result)
+
+arrows(.58, - 1.75, 0.48, -1.45, length = 0.125, angle = 30, code = 2, col="orange", lwd=4)
+
+title(main = "Optimal Clustering", line = -0.85)
+
+result_km <- CirClust(O, K, Circumference, method = "HEUC")
+
+plot(result_km)
+
+
+arrows(.58, - 1.75, 0.4, -1.5, length = 0.125, angle = 30, code = 2, col="orange", lwd=4)
+
+
+title(main = "Heuristic Clustering", line = -0.85)
+  
+```
+
+
+

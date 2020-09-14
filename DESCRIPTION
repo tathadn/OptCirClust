@@ -1,0 +1,33 @@
+Package: OptCirClust
+Type: Package
+Title: Optimal Circular Data Clustering
+Version: 0.0.1
+Date: 2020-09-15
+Authors@R: c(person("Tathagata", "Debnath", role = "aut", 
+	                  comment = c(ORCID = "0000-0001-6445-275X")),
+             person("Joe", "Song", role = c("aut", "cre"),
+                    comment = c(ORCID = "0000-0002-6883-6547"),
+		                email = "joemsong@cs.nmsu.edu"))
+Author: 
+  Tathagata Debnath [aut] (<https://orcid.org/0000-0001-6445-275X>),
+  Joe Song [aut, cre] (<https://orcid.org/0000-0002-6883-6547>)
+Maintainer: Joe Song <joemsong@cs.nmsu.edu>
+Description: A fast, optimal, and reproducible circular clustering
+ algorithm called FOCC. It finds optimal clusters on circular data.
+ Its runtime is O(K N log^2 N), where K is the number of clusters and
+ N is the number of circular data points. On a desktop computer using
+ a single processor core, millions of circular data points can be
+ clustered within seconds. The FOCC algorithm is a first general
+ high-performance solution to circular data clustering, applicable to
+ characterizing events along circular genomes of bacteria,
+ chloroplast, and mitochondria.
+VignetteBuilder: knitr
+License: LGPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+LinkingTo: Rcpp
+Imports: Ckmeans.1d.dp, graphics, plotrix, Rcpp, stats
+Suggests: ape, bazar, knitr, micropan, rmarkdown, seqinr, 
+          testthat, reshape2, ggplot2
+NeedsCompilation: yes
