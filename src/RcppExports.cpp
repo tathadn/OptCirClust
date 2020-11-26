@@ -6,19 +6,19 @@
 using namespace Rcpp;
 
 // lin_polylog_framed_clust
-Rcpp::List lin_polylog_framed_clust(std::vector<double>& X, int width, int K, int First, int Last, int Prev, int Next);
-RcppExport SEXP _OptCirClust_lin_polylog_framed_clust(SEXP XSEXP, SEXP widthSEXP, SEXP KSEXP, SEXP FirstSEXP, SEXP LastSEXP, SEXP PrevSEXP, SEXP NextSEXP) {
+Rcpp::List lin_polylog_framed_clust(std::vector<double>& X, int K, int frame_width, int first_frame, int last_frame, int prev_k_f, int next_k_f);
+RcppExport SEXP _OptCirClust_lin_polylog_framed_clust(SEXP XSEXP, SEXP KSEXP, SEXP frame_widthSEXP, SEXP first_frameSEXP, SEXP last_frameSEXP, SEXP prev_k_fSEXP, SEXP next_k_fSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::vector<double>& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< int >::type width(widthSEXP);
     Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type First(FirstSEXP);
-    Rcpp::traits::input_parameter< int >::type Last(LastSEXP);
-    Rcpp::traits::input_parameter< int >::type Prev(PrevSEXP);
-    Rcpp::traits::input_parameter< int >::type Next(NextSEXP);
-    rcpp_result_gen = Rcpp::wrap(lin_polylog_framed_clust(X, width, K, First, Last, Prev, Next));
+    Rcpp::traits::input_parameter< int >::type frame_width(frame_widthSEXP);
+    Rcpp::traits::input_parameter< int >::type first_frame(first_frameSEXP);
+    Rcpp::traits::input_parameter< int >::type last_frame(last_frameSEXP);
+    Rcpp::traits::input_parameter< int >::type prev_k_f(prev_k_fSEXP);
+    Rcpp::traits::input_parameter< int >::type next_k_f(next_k_fSEXP);
+    rcpp_result_gen = Rcpp::wrap(lin_polylog_framed_clust(X, K, frame_width, first_frame, last_frame, prev_k_f, next_k_f));
     return rcpp_result_gen;
 END_RCPP
 }

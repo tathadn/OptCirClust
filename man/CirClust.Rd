@@ -53,6 +53,13 @@ This statistic is maximized given the number of clusters.}
 Perform clustering on circular data to minimize the
   within-cluster sum of squared distances.
 }
+\details{
+In clustering \eqn{N} circular points into \eqn{K} clusters, the "FOCC" algorithm
+is reproducible with runtime \eqn{O(K N \log^2 N)}{O(K N log^2 N)};
+The "HEUC" algorithm, not always reproducible, calls the \code{kmeans} function repeatedly;
+The "BOCC" algorithm with runtime \eqn{O(KN^2)}, reproducible but slow, is done via
+repeatedly calling the \code{Ckmeans.1d.dp} function.
+}
 \examples{
 O <- c(1,2, 10,11,12,13,14,15, 27,28,29,30,31,32, 40,41)
 

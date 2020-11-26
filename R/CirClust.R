@@ -28,6 +28,13 @@ NULL
 #'   included to provide a baseline.
 #'
 #'
+#' @details In clustering \eqn{N} circular points into \eqn{K} clusters, the "FOCC" algorithm
+#' is reproducible with runtime \eqn{O(K N \log^2 N)}{O(K N log^2 N)};
+#' The "HEUC" algorithm, not always reproducible, calls the \code{kmeans} function repeatedly;
+#' The "BOCC" algorithm with runtime \eqn{O(KN^2)}, reproducible but slow, is done via
+#' repeatedly calling the \code{Ckmeans.1d.dp} function.
+#'
+#'
 #'
 #' @return A S3 object containing clusters and statistics on the circular data
 #'
@@ -98,7 +105,7 @@ CirClust <- function(O,
 
 
 
-  width <- length(O)
+  frame.width <- length(O)
 
   I <- order(O)
 
@@ -108,32 +115,35 @@ CirClust <- function(O,
 
   X <- c(O_sort, (O_sort + Circumference))
 
-  First <- 0
+  first.frame <- 0
 
-  Prev <- -1
+  prev_k_f <- -1
 
-  Next <- -1
+  next_k_f <- -1
 
-  Last <- length(X) - width - 1
+  last.frame <- length(X) - frame.width - 1
 
   if (method == "FOCC")
   {
     result <-
-      lin_polylog_framed_clust(X, width, K, First, Last, Prev, Next)
+      lin_polylog_framed_clust(as.double(X), as.integer(K), as.integer(frame.width), as.integer(first.frame), as.integer(last.frame), as.integer(prev_k_f), as.integer(next_k_f))
 
     cluster <-  rep(1, (result$Border[1] - result$ID + 1))
 
+if(K > 1)
+{
+  for (i in 2:K)
+  {
+    cluster <-
+      c(cluster, rep(i, (result$Border[i] - result$Border[i - 1])))
+  }
+}
 
-    for (i in 2:K)
-    {
-      cluster <-
-        c(cluster, rep(i, (result$Border[i] - result$Border[i - 1])))
-    }
 
   }
   else if (method == "BOCC")
   {
-    result <- quad.framed.clust(X, K, First, Last, width)
+    result <- quad.framed.clust(X, K, frame.width, first.frame, last.frame )
 
     cluster <- result$cluster
 
@@ -144,7 +154,7 @@ CirClust <- function(O,
   }
   else if (method == "HEUC")
   {
-    result <- kmeans.framed.clust(X, K, First, Last, width)
+    result <- kmeans.framed.clust(X, K, frame.width, first.frame, last.frame)
 
     cluster <- result$cluster
 
@@ -165,7 +175,7 @@ CirClust <- function(O,
   if (result$ID > 0)
   {
     cluster_new <-
-      c(cluster[(width - result$ID + 1):width], cluster[1:(width - result$ID)])    # The result$ID count starts from zero
+      c(cluster[(frame.width - result$ID + 1):frame.width], cluster[1:(frame.width - result$ID)])    # The result$ID count starts from zero
 
   }
   else

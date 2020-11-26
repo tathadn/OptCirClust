@@ -44,7 +44,7 @@ HEUC_SSQ <- c()
 
 
 
-First <- 0
+First <- 1
 
 Prev <- -1
 
@@ -69,12 +69,12 @@ Data_Points <- c(x,(x + length(x)))
 
 width <- length(Data_Points)/2
 
-Last <- length(Data_Points) - width - 1
+Last <- length(Data_Points) - width 
 
 
 ptm <- proc.time()
 
-  result1 <- lin_polylog_framed_clust(Data_Points, width, K, First, Last, Prev, Next)
+  result1 <- FramedClust(Data_Points,  K, width, First, Last, "linear.polylog")
 
   time <- proc.time() - ptm
 
@@ -88,7 +88,7 @@ ptm <- proc.time()
 
   ptm <- proc.time()
 
-  result2 <- quad.framed.clust(Data_Points, K, First, Last, width)
+  result2 <- FramedClust(Data_Points,  K, width, First, Last, "Ckmeans.1d.dp")
 
   time <- proc.time() - ptm
 
@@ -100,7 +100,7 @@ ptm <- proc.time()
 
   ptm <- proc.time()
 
-  result3 <- kmeans.framed.clust(Data_Points, K, First, Last, width)
+  result3 <- FramedClust(Data_Points,  K, width, First, Last, "kmeans")
 
   time <- proc.time() - ptm
 
@@ -169,7 +169,7 @@ for(K in seq(10,100,10))
 
   ptm <- proc.time()
 
-  result1 <- lin_polylog_framed_clust(Data_Points, width, K, First, Last, Prev, Next)
+  result1 <- FramedClust(Data_Points,  K, width, First, Last, "linear.polylog")
 
   time <- proc.time() - ptm
 
@@ -183,7 +183,7 @@ for(K in seq(10,100,10))
 
   ptm <- proc.time()
 
-  result2 <- quad.framed.clust(Data_Points, K, First, Last, width)
+  result2 <-  FramedClust(Data_Points,  K, width, First, Last, "Ckmeans.1d.dp")
 
   time <- proc.time() - ptm
 
@@ -195,7 +195,7 @@ for(K in seq(10,100,10))
 
   ptm <- proc.time()
 
-  result3 <- kmeans.framed.clust(Data_Points, K, First, Last, width)
+  result3 <- FramedClust(Data_Points,  K, width, First, Last, "kmeans")
 
   time <- proc.time() - ptm
 
