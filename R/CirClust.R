@@ -36,7 +36,9 @@ NULL
 #'
 #'
 #'
-#' @return A S3 object containing clusters and statistics on the circular data
+#' @return An object of class \code{"CirClust"} which has a \code{plot}
+#'  method. It is a list with the following components:
+#'
 #'
 #'
 #' \item{ID}{the starting index of the frame with minimum SSQ}
@@ -251,7 +253,7 @@ if(K > 1)
       "Circumference" = Circumference
     )
 
-  class (result_new) <- "CirClust"
+  class(result_new) <- "CirClust"
 
   return(result_new)
 }

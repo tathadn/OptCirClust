@@ -11,7 +11,7 @@
 #'
 #' @param x an object of class as returned by \code{CirClust}
 #' @param xlab a character string. The x-axis label for the plot.
-#' @param ylab a character string. The x-axis label for the plot.
+#' @param ylab a character string. The y-axis label for the plot.
 #' @param main a character string. The title for the plot.
 #' @param sub a character string. The subtitle for the plot.
 #' @param col.clusters a vector of colors, defined either by integers or by color names. If the length is shorter than the number of clusters, the colors will be reused.
@@ -21,22 +21,17 @@
 #' @return the same input object of class \code{CirClust}
 #'
 #'@examples
-#'
 #' n <- 100
-#'
 #' m <- 5
-#'
 #' O <- c(rnorm(n,mean=5,sd=m),rnorm(n,mean=15,sd=m),rnorm(n,mean=26,sd=m))
-#'
 #' K <- 3
-#'
 #' Circumference <- 28
 #'
 #' result <- CirClust(O, K, Circumference, method = "FOCC")
 #'
 #' color <- c("#0000CD","#808080", "#DC143C")
 #'
-#' plot(result,col.clusters = color)
+#' plot(result, col.clusters = color)
 #'
 #'
 #' @export
@@ -76,7 +71,7 @@ plot.CirClust <- function(x,
   # y <- O
 
 
-  par(mar = c(0, 0, 0, 0))
+  opar <- par(mar = c(0, 0, 0, 0))
   # plot(x, y, type="p",
   #     xlab=xlab, ylab=ylab, main=main, sub=sub)
   plot(
@@ -87,7 +82,8 @@ plot.CirClust <- function(x,
     type = "l",
     axes = FALSE,
     xaxs = "i",
-    yaxs = "i"
+    yaxs = "i",
+    ...
   )
   draw.circle(0, 0, c(1.15, 0.75), col = c("#fffdd0", "#FFFFFF"))
 
@@ -162,6 +158,9 @@ plot.CirClust <- function(x,
 
   }
 
+  title(main = main, line = -1)
+
+  par(opar)
   invisible(ck)
 
 }

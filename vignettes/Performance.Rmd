@@ -1,10 +1,10 @@
 ---
-title: "Empirical Performance of Three Circular Data Clustering Algorithms"
+title: "Performance of three circular data clustering algorithms"
 author: "Tathagata Debnath and Joe Song"
 date: "Updated: 2020-09-05. Created: 2020-08-07"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Empirical Performance of Three Circular Data Clustering Algorithms}
+  %\VignetteIndexEntry{Performance of three circular data clustering algorithms}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -248,9 +248,13 @@ plot3 <- ggplot(df, aes(x=No_Clusters, y=value, col=variable, size=mysize)) + ge
 
 ```
 
-We illustrate the runtime and quality of three circular data clustering algorithms: 1) fast optimal circular clustering (FOCC), 2) heuristic K means clustering (HEUC), and 3) brute force optimal clustering (BOCC).
+We illustrate the runtime and quality of three circular data clustering algorithms: 
 
-## Effects of number of points on runtime of circular data clustering  
+1. fast optimal circular clustering (FOCC), 
+2. repeated heuristic $K$-means clustering (HEUC), and
+3. brute force optimal clustering (BOCC).
+
+## Runtime as a function of number of points for circular clustering  
 
 The runtime of both optimal and heuristic algorithms increases with the number of points in the circular data. Empirical runtime of the three algorithms as a function of the number of points $N$ are shown in the figure below. Both the HEUC and the BOCC algorithms increase at a quadratic rate. In contrast, the runtime of FOCC increases at a linear poly-logarithmic rate. Runtime is crucial for processing large datasets. 
 
@@ -264,7 +268,7 @@ plot(plot1)
 
 
 
-## Effects of number of clusters on runtime of circular data clustering
+## Runtime as a function of number of clusters
 
 The runtime is also affected by the number of clusters $K$ inside the circular data. The figure below shows this effect on the three algorithms. Empirical runtime of both HEUC and BOCC increases at a similar rate to FOCC over an increasing $K$. 
 
@@ -277,7 +281,7 @@ plot(plot2)
 
 
 
-## Effects of number of clusters on quality of circular data clustering
+## Circular clustering optimality as a function of number of clusters
 
 The within-cluster sum of squared distances (SSQ) indicates the compactness of a cluster. A low value of SSQ suggests a good compact clustering outcome. The last figure shows the change in SSQ value with number of clusters $K$ in the data. The SSQ values of BOCC and FOCC always remain no more than that of the HEUC algorithm. This indicates the optimal BOCC and FOCC algorithms identify better clusters than the heuristic HEUC algorithm. The advantage of FOCC and BOCC over HEUC in SSQ gradually increases with $K$. 
 ```{r,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}

@@ -2,23 +2,31 @@
 
 ## Version 0.0.1
     
-    2020-11-25
-  To-do:
+    
+    2020-11-30
+    
+  1. The orange arrows in the CircularGenomes vignette are visible now.
   
-  1. Define the meaning of frame.width in the user document and the details 
-  section. 
-
+    
+    2020-11-29
+    
+  1. In FramedClust, replaced the default 
+        last.frame = length(X)-frame.width
+     by 
+        last.frame = length(X)-frame.width+1,
+  
+  2. Replaced the circular data examples in plot.FramedClust
+  3. Defined the meaning of frame.width in the user document and the
+  details section.
+  4. Updated the FramedClust() manual. 
+     + explained the NA in the 'cluster' component
+     + removed the 'ID' component. 
+     + removed "best.frame -> ID", and "Clearly define Border".
+      
+        
     2020-11-24
 
   1. Updated the package title and description. 
-    
-
-
-    
-
-  
-  
-
   
   
     2020-10-06
@@ -31,7 +39,7 @@
     method = c("linear.polylog", "kmeans", "Ckmeans.1d.dp")
   )
   
-  2. create an R interface to lin_polylog_framed_clust 
+<!--  2. create an R interface to lin_polylog_framed_clust 
   
   (do we need this seperate function, we are handeling all the framed clusters in the FramedClust function)
   
@@ -39,7 +47,8 @@
   
   For lin.polylog.framed.clust, the indices must be 1-based to be consistent with R;
   For lin_polylog_framed_clust, the indices must be 0-based to be consistent with C/C++.
-  
+-->
+
   
     2020-09-29
   
@@ -47,13 +56,12 @@
      kmeans.framed.clust(), quad.framed.clust() functions. Thus, we do not have to maintain three manuals that look almost identical.
      
   2. Reorder/rename the arguments to
-  
-  lin_polylog_framed_clust(X, K, frame_width, first_frame, last_frame, prev, next)
-  kmeans.framed.clust(X, K, frame.width, first.frame, last.frame)
-  quad.framed.clust(X, K, frame.width, first.frame, last.frame)
-  
-  
-  
+  - lin_polylog_framed_clust(X, K, frame_width, first_frame, last_frame, prev, next)
+  - kmeans.framed.clust(X, K, frame.width, first.frame, last.frame)
+  - quad.framed.clust(X, K, frame.width, first.frame, last.frame)
+
+ ---
+
     2020-09-13
   
   1. Completed the manual for function lin_polylog_framed_clust.
@@ -85,14 +93,13 @@
      "lin_polylog_framed_clust.cpp"
   5. Exported lin_polylog_framed_clust as a function for the package.
 
-  
-  
-  2020-08-08
+<!--  
+    2020-08-08
   
   1. Shall we remove the following two arguments  (Yes)
        prev_k_f = -1,
        next_k_f = -1
        from FramedClust? I would think the user will never
        use them. Is so, will they cause confusion to the user?
-  
+-->  
   

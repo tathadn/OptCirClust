@@ -1,54 +1,44 @@
 
-#' Plot Framed Clustering Results
+#' Plot Framed Data Clustering Results
 #'
-#' Visualize clusters of circular data from clustering result of class \code{CirClust}.
+#' Visualize results of framed clustering
 #'
-#' @importFrom plotrix draw.circle
-#' @importFrom plotrix draw.radial.line
-#' @importFrom plotrix arctext
 #' @import graphics
+#' @import stats
 #'
-#' @param x an object of class as returned by \code{CirClust}
+#' @param x an object of class \code{FramedClust} as returned by \code{FramedClust}
 #' @param xlab a character string. The x-axis label for the plot.
-#' @param ylab a character string. The x-axis label for the plot.
+#' @param ylab a character string. The y-axis label for the plot.
 #' @param main a character string. The title for the plot.
 #' @param sub a character string. The subtitle for the plot.
 #' @param col.clusters a vector of colors, defined either by integers or by color names. If the length is shorter than the number of clusters, the colors will be reused.
 #' @param ... other arguments associated with the plot function
 #'
 #'
-#' @return the same input object of class \code{CirClust}
+#' @return An object of class \code{"FramedClust"},
+#' identical to the input \code{x}
 #'
 #'@examples
-#'
-#' n <- 100
-#'
-#' m <- 5
-#'
-#' O <- c(rnorm(n,mean=5,sd=m),rnorm(n,mean=15,sd=m),rnorm(n,mean=26,sd=m))
-#'
+#' N <- 100
+#' X <- rchisq(N, 5)
 #' K <- 3
+#' frame.width <- 40
 #'
-#' Circumference <- 28
+#' result <- FramedClust(X, K, frame.width)
 #'
-#' result <- CirClust(O, K, Circumference, method = "FOCC")
-#'
-#' color <- c("#0000CD","#808080", "#DC143C")
-#'
-#' plot(result,col.clusters = color)
-#'
-#'
+#' plot(result)
+
+
 #' @export
 plot.FramedClust <- function(x,
-                          xlab = NULL,
-                          ylab = NULL,
-                          main = NULL,
-                          sub = NULL,
-                          col.clusters = NULL,
-                          ...)
+                             xlab = NULL,
+                             ylab = NULL,
+                             main = NULL,
+                             sub = NULL,
+                             col.clusters = NULL,
+                             ...)
 {
   ck <- x
-
 
   if (exists(ck$X_name, mode = "numeric")) {
     X <- get(ck$X_name, mode = "numeric")
@@ -61,32 +51,84 @@ plot.FramedClust <- function(x,
     color = c("#009270",
               "#DC143C",
               "#0000CD",
-              "#000000",
+              "#03faf2",
               "#c902c6",
               "#FA6A03")
   } else{
-    color =  col.clusters
+    color = col.clusters
   }
 
-  X <- sort(X)
+  I <- order(X)
 
-  plot(x=c(min(X),max(X)),y=rep(2,2),xlim = c(min(X),max(X)),ylim = c(0,5),type="n",xlab = "", ylab = "")
+  X <- X[I]
+
+  cluster <- ck$cluster[I]
+
+  unique.clusters <- unique(na.omit(ck$cluster))
+
+  ID <- which(cluster == unique.clusters[1])[1]
+
+  if(ID != 1) ID <- ID - 1
+
+
+  frame.width <- sum(!is.na(cluster))
+  K <- max(cluster, na.rm = TRUE)
+
+  if(is.null(main)) main <- "Optimal framed clustering"
+  if(is.null(sub)) sub <- paste0("frame width = ", frame.width, " points, K = ", K)
+  if(is.null(xlab)) xlab <- paste0(as.character(ck$X_name))
+  if(is.null(ylab)) ylab <- ""
+  plot(x = c(min(X), max(X)), y=rep(2,2),
+       xlim = c(min(X), max(X)), ylim = c(0,3), type="n",
+       xlab = xlab,
+       ylab = ylab, yaxt = "n", sub = sub, main=main)
 
   segments(x0 = X, y0 = 0.1, x1 = X, y1 = 1.9, col = "grey")
 
-  rect(xleft = X[( ck$ID + 1 )], ybottom = 0, xright = X[(ck$ID + sum(ck$size) )] , ytop = 2, col = "#fffdd0", border = "black")
+  if(ID >= 1)
+  {
+    xleft = (X[( ID  )] + X[( ID + 1 )])/2
+  }
+  else
+  {
+    xleft =  X[( ID + 1 )]
+  }
 
-  for(i in ( ck$ID + 1 ):( ck$ID + sum(ck$size) ) )
+
+  if((ID + sum(ck$size) ) < length(X))
+  {
+    xright = (X[(ID + sum(ck$size) )] + X[(ID + sum(ck$size) + 1 )])/2
+  }
+  else
+  {
+    xright = X[(ID + sum(ck$size) )]
+  }
+
+
+
+  rect(xleft = xleft, ybottom = 0, xright = xright,
+       ytop = 2, col = NULL, border = "black", lty="dashed")
+
+
+
+  for(i in ( ID + 1 ):( ID + sum(ck$size) ) )
   {
 
-    segments(x0 = X[i], y0 = 0.1, x1 = X[i], y1 = 1.9, col = color[ck$cluster[i] %% length(color) + 1])
+    segments(x0 = X[i], y0 = 0.1, x1 = X[i], y1 = 1.9, col = color[cluster[i] %% length(color) + 1])
 
   }
 
-  segments(x0 = ck$Border.mid, y0 = -0.125, x1 = ck$Border.mid, y1 = 2.125, col = "black",lty = "dotdash")
 
-  segments(x0 = ck$Border.mid, y0 = -0.125, x1 = ck$Border.mid, y1 = 2.125, col = "black",lty = "dotdash")
+  o <- order(unique.clusters)
 
-  segments(x0 = ck$Border.mid, y0 = -0.125, x1 = ck$Border.mid, y1 = 2.125, col = "black",lty = "dotdash")
+  cluster_name <- paste0("Cluster ", unique.clusters)[o]
+
+  cluster_color <- color[unique.clusters %% length(color) + 1][o]
+
+  legend("topleft",
+         legend=cluster_name,
+         col=cluster_color, lty=1, cex=0.8)
+
+
 
 }

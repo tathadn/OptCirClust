@@ -2,27 +2,27 @@ Package: OptCirClust
 Type: Package
 Title: Optimal Circular and Framed Data Clustering
 Version: 0.0.1
-Date: 2020-11-24
+Date: 2020-11-29
 Authors@R: c(person("Tathagata", "Debnath", role = "aut", 
 	                  comment = c(ORCID = "0000-0001-6445-275X")),
              person("Joe", "Song", role = c("aut", "cre"),
                     comment = c(ORCID = "0000-0002-6883-6547"),
 		                email = "joemsong@cs.nmsu.edu"))
-Author: 
+Author:
   Tathagata Debnath [aut] (<https://orcid.org/0000-0001-6445-275X>),
   Joe Song [aut, cre] (<https://orcid.org/0000-0002-6883-6547>)
 Maintainer: Joe Song <joemsong@cs.nmsu.edu>
-Description: Fast, optimal, and reproducible circular and framed data
- clustering algorithms. The runtime of the circular clustering
- algorithm is O(K N log^2 N), where K is the number of clusters and N
- is the number of circular data points. On a desktop computer using a
- single processor core, millions of circular data points can be
- clustered within seconds. One can use it to characterize
- events along circular DNA molecules, circular RNA molecules, and
- circular genomes of bacteria, chloroplast, and mitochondria. One can
- also cluster climate data along any given longitude or latitude. The
- algorithms offer a general high-performance solution to circular and
- framed data clustering. 
+Description: Fast, optimal, and reproducible circular, periodic, and
+ framed data clustering algorithms. The runtime of the circular
+ clustering algorithm is O(K N log^2 N), where K is the number of
+ clusters and N is the number of circular data points. On a desktop
+ computer using a single processor core, millions of circular data
+ points can be clustered within seconds. One can use it to
+ characterize events along circular DNA molecules, circular RNA
+ molecules, and circular genomes of bacteria, chloroplast, and
+ mitochondria. One can also cluster climate data along any given
+ longitude or latitude. The algorithms offer a general
+ high-performance solution to circular and framed data clustering. 
 VignetteBuilder: knitr
 License: LGPL (>= 3)
 Encoding: UTF-8

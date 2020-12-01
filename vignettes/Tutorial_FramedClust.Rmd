@@ -1,0 +1,59 @@
+---
+title: "Tutorial on Framed Clustering"
+author: "Tathagata Debnath and Joe Song"
+date: "Created: 2020-11-29"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial on Framed Clustering}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+The `FramedClust` function is designed to cluster the points belonging to a portion of any linear data X, defined by the frame. The `frame.width` parameter indicates the number of points to be included in each frame from X. The absolute width of the frames may change depending on the iteration. 
+
+Here we consider some simple examples to exhibit the operations of the `FramedClust` function.
+
+## Data preparation
+
+Any linear dataset can be used with the `FramedClust` function. The input $X$ contains some points from a linear data. We will find $K=3$ clusters in this data, the $frame.width = 5$ , so the frame will always contain 5 points from $X$. 
+
+```{r,  message=FALSE, warning=FALSE}
+library(OptCirClust)
+
+X = c(-3, 2.2,-6, 7, 9, 11,-6.3, 75, 82.6, 32.3,-9.5, 62.5, 7.5, 95.2)
+K = 3
+frame.width = 5
+
+```
+
+
+## Clustering the data 
+
+Now we demonstrate how to cluster the data using three different algorithms: the recommended "linear.polylog", the slow brute force "Ckmeans.1d.dp", and the slow and heuristic "kmeans". 
+
+```{r,  message=FALSE, warning=FALSE}
+# Our recommended method is the fast and optimal linear.polylog:
+result_linear.polylog <- FramedClust(X, K, frame.width,  method = "linear.polylog")
+
+# The slow and optimal Ckmeans.1d.dp:
+result_Ckmeans.1d.dp <- FramedClust(X, K, frame.width,  method = "Ckmeans.1d.dp")
+
+# The slow and heuristic kmeans:
+result_kmeans <- FramedClust(X, K, frame.width, method = "kmeans")
+```
+
+
+## Visualizing the clusters
+
+The clustering outcomes obtained from the `FramedClust` function can be visualized using the `plot` function.
+
+```{r,  message=FALSE, warning=FALSE, fig.width = 5, fig.asp = .92}
+plot(result_linear.polylog, main = "linear.polylog: optimal")
+
+plot(result_Ckmeans.1d.dp, main = "Ckmeans.1d.dp: brute force")
+
+plot(result_kmeans, main = "kmeans: heuristic")
+```
+
+
+The points are colored according to their cluster. The black dashed line represents the frame with minimum sum of squared distance value. All the points outside the frame are colored in gray. The `Framed cluster` algorithm returns one of the best frames according to the given configuration for the selected algorithm.

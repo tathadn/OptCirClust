@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-FramedClust.R
 \name{plot.FramedClust}
 \alias{plot.FramedClust}
-\title{Plot Framed Clustering Results}
+\title{Plot Framed Data Clustering Results}
 \usage{
 \method{plot}{FramedClust}(
   x,
@@ -15,11 +15,11 @@
 )
 }
 \arguments{
-\item{x}{an object of class as returned by \code{CirClust}}
+\item{x}{an object of class \code{FramedClust} as returned by \code{FramedClust}}
 
 \item{xlab}{a character string. The x-axis label for the plot.}
 
-\item{ylab}{a character string. The x-axis label for the plot.}
+\item{ylab}{a character string. The y-axis label for the plot.}
 
 \item{main}{a character string. The title for the plot.}
 
@@ -30,28 +30,19 @@
 \item{...}{other arguments associated with the plot function}
 }
 \value{
-the same input object of class \code{CirClust}
+An object of class \code{"FramedClust"},
+identical to the input \code{x}
 }
 \description{
-Visualize clusters of circular data from clustering result of class \code{CirClust}.
+Visualize results of framed clustering
 }
 \examples{
-
-n <- 100
-
-m <- 5
-
-O <- c(rnorm(n,mean=5,sd=m),rnorm(n,mean=15,sd=m),rnorm(n,mean=26,sd=m))
-
+N <- 100
+X <- rchisq(N, 5)
 K <- 3
+frame.width <- 40
 
-Circumference <- 28
+result <- FramedClust(X, K, frame.width)
 
-result <- CirClust(O, K, Circumference, method = "FOCC")
-
-color <- c("#0000CD","#808080", "#DC143C")
-
-plot(result,col.clusters = color)
-
-
+plot(result)
 }

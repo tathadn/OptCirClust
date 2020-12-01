@@ -9,7 +9,7 @@ FramedClust(
   K,
   frame.width,
   first.frame = 1,
-  last.frame = length(X) - frame.width,
+  last.frame = length(X) - frame.width + 1,
   method = c("linear.polylog", "kmeans", "Ckmeans.1d.dp")
 )
 }
@@ -18,23 +18,23 @@ FramedClust(
 
 \item{K}{The Number of Clusters in each frame}
 
-\item{frame.width}{The Number of Points in a frame}
+\item{frame.width}{The Number of Points from X to be included in each frame. The actual width of the frame may vary from iteration to iteration.}
 
-\item{first.frame}{Starting index of the first frame to be clustered (start counting from 0)}
+\item{first.frame}{Starting index of the first frame to be clustered}
 
-\item{last.frame}{Starting index of the last frame to be clustered (start counting from 0)}
+\item{last.frame}{Starting index of the last frame to be clustered}
 
 \item{method}{the circular clustering method.
 \code{"linear.polylog"}: fast and optimal, the default method;
   \code{"kmeans"}: based on heuristic k-means, fast but not necessarily optimal;
-  \code{"Ckmeans.1d.dp"}: brute-force based on Ckmeans.1d.dp, slow but optimal,
+  \code{"Ckmeans.1d.dp"}: brute-force based on quadratic runtime algorithm from the Ckmeans.1d.dp. The algorithm is slow but optimal,
   included to provide a baseline.}
 }
 \value{
-A dataframe containing important statistics
-of associated with best frame
+An object of class \code{"FramedClust"} which has a \code{plot}
+ method. It is a list with the following components:
 
-\item{cluster}{ A vector of clusters assigned to each element in x. Each cluster is indexed by an integer from 1 to k.}
+\item{cluster}{ A vector of clusters assigned to each element in x. Each cluster is indexed by an integer from 1 to k. NA represents the points from X that are not part of any cluster.}
 
 \item{centers}{ A numeric vector of the  means for each cluster in the frame.}
 
@@ -48,13 +48,7 @@ of associated with best frame
 
 \item{betweenss}{	 Sum of  squared distances between each cluster mean and sample mean. This statistic is maximized given the number of clusters.}
 
-\item{ID}{Starting index of the frame with minimum SSQ.}
-
-\item{Border}{ The cluster border of K clusters.}
-
-best.frame -> ID
-
-Clearly define Border.
+\item{X_name}{A character string. The actual name of the \code{X} argument.}
 }
 \description{
 Find a frame of given size, among all possible such frames
@@ -70,18 +64,15 @@ fast optimal framed clustering. The method option
  frames without guarantee of clustering optimality.
 }
 \examples{
-X <- c(1:100)
-
+N <- 100
+X <- rnorm(N)
 K <- 5
-
-frame.width <- 10
-
+frame.width <- 60
 first.frame <- 1
-
-last.frame <- 90
-
+last.frame <- N - frame.width + 1
 method <- "linear.polylog"
 
 result <- FramedClust( X, K, frame.width, first.frame, last.frame, method)
+plot(result)
 
 }

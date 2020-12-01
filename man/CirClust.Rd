@@ -22,7 +22,9 @@ data are located}
   included to provide a baseline.}
 }
 \value{
-A S3 object containing clusters and statistics on the circular data
+An object of class \code{"CirClust"} which has a \code{plot}
+ method. It is a list with the following components:
+
 
 
 \item{ID}{the starting index of the frame with minimum SSQ}

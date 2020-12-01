@@ -19,7 +19,7 @@
 
 \item{xlab}{a character string. The x-axis label for the plot.}
 
-\item{ylab}{a character string. The x-axis label for the plot.}
+\item{ylab}{a character string. The y-axis label for the plot.}
 
 \item{main}{a character string. The title for the plot.}
 
@@ -36,22 +36,17 @@ the same input object of class \code{CirClust}
 Visualize clusters of circular data from clustering result of class \code{CirClust}.
 }
 \examples{
-
 n <- 100
-
 m <- 5
-
 O <- c(rnorm(n,mean=5,sd=m),rnorm(n,mean=15,sd=m),rnorm(n,mean=26,sd=m))
-
 K <- 3
-
 Circumference <- 28
 
 result <- CirClust(O, K, Circumference, method = "FOCC")
 
 color <- c("#0000CD","#808080", "#DC143C")
 
-plot(result,col.clusters = color)
+plot(result, col.clusters = color)
 
 
 }
