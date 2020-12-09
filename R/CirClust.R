@@ -1,10 +1,4 @@
-## usethis namespace: start
-#' @useDynLib OptCirClust, .registration = TRUE
-#' @importFrom Rcpp sourceCpp
-## usethis namespace: end
-NULL
-
-#'
+# CirClust.R
 #'
 #'
 #'
@@ -12,6 +6,9 @@ NULL
 #'
 #' Perform clustering on circular data to minimize the
 #'   within-cluster sum of squared distances.
+#'
+#' @useDynLib OptCirClust, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
 #'
 #' @param O a vector of circular data points. They can be coordinates
 #'   along the circle based on distance, or angles around the circle.
@@ -77,7 +74,10 @@ NULL
 #' output <- CirClust(O, K, Circumference)
 #'
 #' # Visualize the circular clusters:
+#' opar <- par(mar=c(1,1,2,1))
 #' plot(output)
+#' par(opar)
+#'
 #'
 #' @export
 #'
@@ -86,6 +86,8 @@ CirClust <- function(O,
                      Circumference,
                      method = c("FOCC", "HEUC", "BOCC"))
 {
+  O_name <- deparse(substitute(O))
+
   method <- match.arg(method)
 
   O <- O %% Circumference
@@ -128,18 +130,21 @@ CirClust <- function(O,
   if (method == "FOCC")
   {
     result <-
-      lin_polylog_framed_clust(as.double(X), as.integer(K), as.integer(frame.width), as.integer(first.frame), as.integer(last.frame), as.integer(prev_k_f), as.integer(next_k_f))
+      lin_polylog_framed_clust(
+        as.double(X), as.integer(K), as.integer(frame.width),
+        as.integer(first.frame), as.integer(last.frame),
+        as.integer(prev_k_f), as.integer(next_k_f))
 
     cluster <-  rep(1, (result$Border[1] - result$ID + 1))
 
-if(K > 1)
-{
-  for (i in 2:K)
-  {
-    cluster <-
-      c(cluster, rep(i, (result$Border[i] - result$Border[i - 1])))
-  }
-}
+    if(K > 1)
+    {
+      for (i in 2:K)
+      {
+        cluster <-
+          c(cluster, rep(i, (result$Border[i] - result$Border[i - 1])))
+      }
+    }
 
 
   }
@@ -230,12 +235,10 @@ if(K > 1)
 
 
 
- # result$centers <- sort(result$centers, decreasing = FALSE)
+  # result$centers <- sort(result$centers, decreasing = FALSE)
 
 
   Border.mid <- (X[result$Border + 1] + X[result$Border + 2]) / 2
-
-  O_name <- deparse(substitute(O))
 
   result_new <-
     list(

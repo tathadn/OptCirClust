@@ -73,6 +73,9 @@ Circumference <- 42
 output <- CirClust(O, K, Circumference)
 
 # Visualize the circular clusters:
+opar <- par(mar=c(1,1,2,1))
 plot(output)
+par(opar)
+
 
 }

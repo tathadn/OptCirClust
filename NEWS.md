@@ -2,10 +2,42 @@
 
 ## Version 0.0.1
     
+    2020-12-07:
+    
+  1. Updated plot.CirClust() function to avoid calling `par()` function. 
+     This will give the user full control of graphic parameters.
+     Updated the function's manual, examples, and related vignettes. 
+  2. Updated package DESCRIPTION and README.md.
+  3. Changed package title.
+  
+    
+    2020-12-04:
+    
+  1. Included with the package a FASTA file downloaded from
+     GenBank accession number CP019943.1, representing the
+     circular genome of Candidatus Carsonella ruddii, used
+     in the vignette "Circular genome clustering".
+  
+  
+    2020-12-03:
+    
+  1. Fixed issues with example(FramedClust).
+  2. Optimized plot.CirClust output  
+    
+    
+    2020-12-01
+  1. Fixed an issue where FramedClust crashed if the first.frame is
+     not 1. E.g., 
+        FramedClust(1:10, 2, 4, 2, 7)
+        FramedClust(1:10, 2, 4, 2, 6)
+
     
     2020-11-30
     
-  1. The orange arrows in the CircularGenomes vignette are visible now.
+  1. The orange arrows in the "Circular genome clustering" vignette
+     are visible now.
+  2. Changed the frame.width argument in FramedClust function to
+     frame.size, to reduce potential confusion.
   
     
     2020-11-29
@@ -49,18 +81,19 @@
   For lin_polylog_framed_clust, the indices must be 0-based to be consistent with C/C++.
 -->
 
-  
+<!--  
     2020-09-29
   
   1. Do not export lin_polylog_framed_clust(), 
      kmeans.framed.clust(), quad.framed.clust() functions. Thus, we do not have to maintain three manuals that look almost identical.
      
   2. Reorder/rename the arguments to
-  - lin_polylog_framed_clust(X, K, frame_width, first_frame, last_frame, prev, next)
-  - kmeans.framed.clust(X, K, frame.width, first.frame, last.frame)
-  - quad.framed.clust(X, K, frame.width, first.frame, last.frame)
+  
+  + lin_polylog_framed_clust(X, K, frame_width, first_frame, last_frame, prev, next)
+  + kmeans.framed.clust(X, K, frame.width, first.frame, last.frame)
+  + quad.framed.clust(X, K, frame.width, first.frame, last.frame) 
+-->
 
- ---
 
     2020-09-13
   

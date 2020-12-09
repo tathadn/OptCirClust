@@ -16,12 +16,11 @@ The fast optimal circular clustering (FOCC) and the heuristic $K$-means circular
 ```{r,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}
 library(OptCirClust)
 library(ape)
-library(seqinr)
-library(micropan)
 library(bazar)
 library(knitr)
-library(reshape2)
 library(graphics)
+
+opar <- par(mar=c(0,0,2,0))
 
 opts_chunk$set(fig.width=6, fig.height=4) 
 
@@ -29,11 +28,14 @@ Event <- "CG"
 
 K <- 14
 
-Seq <-  read.GenBank("CP019943.1", as.character = TRUE)
+# Seq <- read.GenBank("CP019943.1", as.character = TRUE)[[1]]
+file <- system.file("extdata", "CP019943.1.fasta", package = "OptCirClust")
 
-Seq <- toupper(concat0(c(Seq[1])))
+Seq <- read.dna(file, format="fasta", as.matrix=FALSE, as.character = TRUE)
 
-V <- gregexpr(Event ,Seq)
+Seq <- toupper(concat0(Seq))
+
+V <- gregexpr(Event, Seq)
 
 O <- sort(V[[1]][1:length(V[[1]])])
 
@@ -56,9 +58,11 @@ plot(result_km, main = "Heuristic circular clustering",)
 # arrows(.58, - 1.75, 0.4, -1.5, length = 0.125, angle = 30, code = 2, col="orange", lwd=4)
 
 arrows(0.135, -0.55, 0,-0.145, length = 0.125, angle = 30, code = 1, col="orange", lwd=4)
+
+par(opar)
 ```
 
-The clusters obtained by FOCC algorithm are more compact and justifiable as compared to the HEUC ones. The cluster border between the $C8$ and $C9$ clusters of the optimal clustering are more subjectively justifiable as compared to the border between $C4$, $C8$ clusters of the heuristic clustering outcome. The cluster borders are pointed by orange arrows inside the circular genome. 
+The clusters obtained by FOCC algorithm are more compact and justifiable as compared to the HEUC ones. The cluster border between the C8 and C9 clusters of the optimal clustering are more subjectively justifiable as compared to the border between C4 and C8 clusters of the heuristic clustering outcome. The cluster borders are pointed by orange arrows inside the circular genome. 
 
 Therefore, the advantage of optimal clustering over the heuristic clustering algorithm is evident in this example representing practical applications. 
 

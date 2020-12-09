@@ -2,43 +2,72 @@
 % Please edit documentation in R/plot-CirClust.R
 \name{plot.CirClust}
 \alias{plot.CirClust}
-\title{Plot Circular Clustering Results}
+\title{Plot Method for Circular Data Clustering}
 \usage{
 \method{plot}{CirClust}(
   x,
-  xlab = NULL,
-  ylab = NULL,
+  xlab = "",
+  ylab = "",
   main = NULL,
-  sub = NULL,
-  col.clusters = NULL,
+  sub = "",
+  col.clusters = c("blue", "red3", "green3", "orange", "purple", "brown"),
+  axes = FALSE,
+  xlim = c(-1.75, 1.75),
+  ylim = c(-1.75, 1.75),
   ...
 )
 }
 \arguments{
 \item{x}{an object of class as returned by \code{CirClust}}
 
-\item{xlab}{a character string. The x-axis label for the plot.}
+\item{xlab}{a character string. The x-axis label for the plot.
+Default is no string.}
 
-\item{ylab}{a character string. The y-axis label for the plot.}
+\item{ylab}{a character string. The y-axis label for the plot.
+Default is no string.}
 
 \item{main}{a character string. The title for the plot.}
 
 \item{sub}{a character string. The subtitle for the plot.}
 
-\item{col.clusters}{a vector of colors, defined either by integers or by color names. If the length is shorter than the number of clusters, the colors will be reused.}
+\item{col.clusters}{a vector of colors, defined either by
+integers or by color names. If the length is shorter than
+the number of clusters, the colors will be reused. By default
+the blue, red3, green3, orange, purple, brown colors are used
+in the plot.}
+
+\item{axes}{the axis will be ploted if set TRUE. Default is FALSE.}
+
+\item{xlim}{range of the x axis in the plot.
+Default is from -1.75 to 1.75.}
+
+\item{ylim}{range of the y axis in the plot.
+Default is from -1.75 to 1.75.}
 
 \item{...}{other arguments associated with the plot function}
 }
 \value{
-the same input object of class \code{CirClust}
+A copy of the input object of class \code{CirClust}.
 }
 \description{
-Visualize clusters of circular data from clustering result of class \code{CirClust}.
+The \code{plot} method for circular data clustering result
+object of class \code{CirClust}.
+It visualizes circular clusters on the input data.
 }
 \examples{
+opar <- par(mar=c(1,1,2,1))
+# Example 1. Circular data clustering
 n <- 100
+Circumference <- 7
+O <- runif(n, 0, Circumference)
+result <- CirClust(O, K=3, Circumference=Circumference)
+plot(result, main="Example 1. Circular clustering")
+
+
+# Example 2. Circular data clustering
+n <- 40
 m <- 5
-O <- c(rnorm(n,mean=5,sd=m),rnorm(n,mean=15,sd=m),rnorm(n,mean=26,sd=m))
+O <- c(rnorm(n,mean=5,sd=m), rnorm(n,mean=15,sd=m), rnorm(n,mean=26,sd=m))
 K <- 3
 Circumference <- 28
 
@@ -46,7 +75,18 @@ result <- CirClust(O, K, Circumference, method = "FOCC")
 
 color <- c("#0000CD","#808080", "#DC143C")
 
-plot(result, col.clusters = color)
+par(mar=c(1,1,2,1))
+
+plot(result, col.clusters = color,
+     main="Example 2. Circular clustering")
 
 
+# Example 3. Periodic data clustering
+n <- 100
+period <- 5.2
+O <- rnorm(n)
+result <- CirClust(O, K=5, Circumference=period)
+plot(result, main="Example 3. Periodic clustering")
+
+par(opar)
 }

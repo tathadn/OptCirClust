@@ -7,48 +7,59 @@
 FramedClust(
   X,
   K,
-  frame.width,
+  frame.size,
   first.frame = 1,
-  last.frame = length(X) - frame.width + 1,
+  last.frame = length(X) - frame.size + 1,
   method = c("linear.polylog", "kmeans", "Ckmeans.1d.dp")
 )
 }
 \arguments{
-\item{X}{The set of data points on which the search has to be conducted}
+\item{X}{a vector of data points to perform framed clustering}
 
-\item{K}{The Number of Clusters in each frame}
+\item{K}{the number of clusters in each frame}
 
-\item{frame.width}{The Number of Points from X to be included in each frame. The actual width of the frame may vary from iteration to iteration.}
+\item{frame.size}{the number of points from X to be included in each frame.
+It is not the width of the frame.}
 
-\item{first.frame}{Starting index of the first frame to be clustered}
+\item{first.frame}{starting index of the first frame to be clustered.
+The first point in the first frame is \code{X[first.frame]}.}
 
-\item{last.frame}{Starting index of the last frame to be clustered}
+\item{last.frame}{starting index of the last frame to be clustered.
+The first point in the first frame is \code{X[last.frame]}.}
 
-\item{method}{the circular clustering method.
-\code{"linear.polylog"}: fast and optimal, the default method;
-  \code{"kmeans"}: based on heuristic k-means, fast but not necessarily optimal;
-  \code{"Ckmeans.1d.dp"}: brute-force based on quadratic runtime algorithm from the Ckmeans.1d.dp. The algorithm is slow but optimal,
-  included to provide a baseline.}
+\item{method}{the framed clustering method. See Details.}
 }
 \value{
 An object of class \code{"FramedClust"} which has a \code{plot}
  method. It is a list with the following components:
 
-\item{cluster}{ A vector of clusters assigned to each element in x. Each cluster is indexed by an integer from 1 to k. NA represents the points from X that are not part of any cluster.}
+\item{cluster}{a vector of clusters assigned to each element in x.
+Each cluster is indexed by an integer from 1 to K.
+NA represents points from X that are outside the optimal frame,
+thus not part of any cluster.}
 
-\item{centers}{ A numeric vector of the  means for each cluster in the frame.}
+\item{centers}{a numeric vector of the means for each cluster
+in the frame.}
 
-\item{withinss}{	A numeric vector of the  within-cluster sum of squares for each cluster.}
+\item{withinss}{a numeric vector of the within-cluster sum of
+squared distances for each cluster.}
 
-\item{size}{	A vector of the  number of elements in each cluster.}
+\item{size}{a vector of the number of elements in each cluster.}
 
-\item{totss}{	Total sum of  squared distances between each element and the sample mean. This statistic is not dependent on the clustering result.}
+\item{totss}{total sum of squared distances between each element
+ and the sample mean. This statistic is not dependent on
+ the clustering result.}
 
-\item{tot.withinss}{	 Total sum of  within-cluster squared distances between each element and its cluster mean. This statistic is minimized given the number of clusters.}
+\item{tot.withinss}{total sum of within-cluster squared
+distances between each element and its cluster mean.
+This statistic is minimized given the number of clusters.}
 
-\item{betweenss}{	 Sum of  squared distances between each cluster mean and sample mean. This statistic is maximized given the number of clusters.}
+\item{betweenss}{sum of squared distances between each
+cluster mean and sample mean. This statistic is maximized
+given the number of clusters.}
 
-\item{X_name}{A character string. The actual name of the \code{X} argument.}
+\item{X_name}{a character string. The actual name of
+the \code{X} argument.}
 }
 \description{
 Find a frame of given size, among all possible such frames
@@ -56,23 +67,35 @@ on the input data, to minimize the minimum within-cluster
 sum of square distances.
 }
 \details{
-The method option `linear.polylog` performs
-fast optimal framed clustering. The method option
- `Ckmeans.1d.dp` performs optimal framed clustering by repeatedly
- finding the best clustering within each frame.
- The `kmeans` option uses heuristic k-means algorithm in all
- frames without guarantee of clustering optimality.
+The method option \code{"linear.polylog"} (default) performs
+ fast optimal framed clustering. The runtime is
+ \eqn{O(K N \log^2 N)}{O(K N log^2 N)}.
+
+The \code{"kmeans"} option repeatedly calling the heuristic
+ k-means algorithm in all frames without any guarantee of
+ cluster optimality.
+
+The method option \code{"Ckmeans.1d.dp"} performs optimal framed
+ clustering by repeatedly finding the best clustering within
+ each frame using the \code{"Ckmeans.1d.dp"} method. At a runtime
+ of \eqn{O(K N^2)}{O(K N^2)}, the algorithm is slow but optimal.
+ It is included to provide a baseline.
 }
 \examples{
 N <- 100
 X <- rnorm(N)
 K <- 5
-frame.width <- 60
-first.frame <- 1
-last.frame <- N - frame.width + 1
+frame.size <- 60
+
+result <- FramedClust(X, K, frame.size)
+plot(result, main="Example 1. Framed clustering on all frames")
+
+frame.size <- 40
+first.frame <- 30
+last.frame <- 50
 method <- "linear.polylog"
 
-result <- FramedClust( X, K, frame.width, first.frame, last.frame, method)
-plot(result)
-
+result <- FramedClust(X, K, frame.size, first.frame,
+                      last.frame, method)
+plot(result, main="Example 2. Framed clustering on a subset of frames")
 }

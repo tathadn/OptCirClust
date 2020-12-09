@@ -1,8 +1,10 @@
+# plot-CirClust.R
 
-
-#' Plot Circular Clustering Results
+#' Plot Method for Circular Data Clustering
 #'
-#' Visualize clusters of circular data from clustering result of class \code{CirClust}.
+#' The \code{plot} method for circular data clustering result
+#' object of class \code{CirClust}.
+#' It visualizes circular clusters on the input data.
 #'
 #' @importFrom plotrix draw.circle
 #' @importFrom plotrix draw.radial.line
@@ -11,19 +13,41 @@
 #'
 #' @param x an object of class as returned by \code{CirClust}
 #' @param xlab a character string. The x-axis label for the plot.
+#'  Default is no string.
 #' @param ylab a character string. The y-axis label for the plot.
+#'  Default is no string.
 #' @param main a character string. The title for the plot.
 #' @param sub a character string. The subtitle for the plot.
-#' @param col.clusters a vector of colors, defined either by integers or by color names. If the length is shorter than the number of clusters, the colors will be reused.
+#' @param col.clusters a vector of colors, defined either by
+#'  integers or by color names. If the length is shorter than
+#'  the number of clusters, the colors will be reused. By default
+#'  the blue, red3, green3, orange, purple, brown colors are used
+#'  in the plot.
+#' @param axes the axis will be ploted if set TRUE. Default is FALSE.
+#' @param xlim range of the x axis in the plot.
+#'    Default is from -1.75 to 1.75.
+#' @param ylim range of the y axis in the plot.
+#'    Default is from -1.75 to 1.75.
 #' @param ... other arguments associated with the plot function
 #'
 #'
-#' @return the same input object of class \code{CirClust}
+#' @return A copy of the input object of class \code{CirClust}.
 #'
 #'@examples
+#' opar <- par(mar=c(1,1,2,1))
+#
+#' # Example 1. Circular data clustering
 #' n <- 100
+#' Circumference <- 7
+#' O <- runif(n, 0, Circumference)
+#' result <- CirClust(O, K=3, Circumference=Circumference)
+#' plot(result, main="Example 1. Circular clustering")
+#'
+#'
+#' # Example 2. Circular data clustering
+#' n <- 40
 #' m <- 5
-#' O <- c(rnorm(n,mean=5,sd=m),rnorm(n,mean=15,sd=m),rnorm(n,mean=26,sd=m))
+#' O <- c(rnorm(n,mean=5,sd=m), rnorm(n,mean=15,sd=m), rnorm(n,mean=26,sd=m))
 #' K <- 3
 #' Circumference <- 28
 #'
@@ -31,35 +55,51 @@
 #'
 #' color <- c("#0000CD","#808080", "#DC143C")
 #'
-#' plot(result, col.clusters = color)
+#' par(mar=c(1,1,2,1))
+#'
+#' plot(result, col.clusters = color,
+#'      main="Example 2. Circular clustering")
 #'
 #'
+#' # Example 3. Periodic data clustering
+#' n <- 100
+#' period <- 5.2
+#' O <- rnorm(n)
+#' result <- CirClust(O, K=5, Circumference=period)
+#' plot(result, main="Example 3. Periodic clustering")
+#'
+#' par(opar)
+
 #' @export
-plot.CirClust <- function(x,
-                          xlab = NULL,
-                          ylab = NULL,
-                          main = NULL,
-                          sub = NULL,
-                          col.clusters = NULL,
-                          ...)
+plot.CirClust <- function(
+  x,
+  xlab = "",
+  ylab = "",
+  main = NULL,
+  sub = "",
+  col.clusters = c(
+    "blue", "red3", "green3", "orange", "purple", "brown"
+  ),
+  axes = FALSE,
+  xlim = c(-1.75, 1.75),
+  ylim = c(-1.75, 1.75),
+  ...)
 {
   ck <- x
-  # if(is.null(xlab)) xlab <- ck$O_name
-  # if(is.null(main)) main <- paste("Circular clustering of ",ck$O_name)
 
-  # if(is.null(sub)) sub=paste("n =", length(ck$cluster))
+  color <- col.clusters
 
-  if (is.null(col.clusters))
-  {
-    color = c("#009270",
-              "#DC143C",
-              "#0000CD",
-              "#000000",
-              "#c902c6",
-              "#FA6A03")
-  } else{
-    color =  col.clusters
-  }
+  # if (is.null(col.clusters))
+  # {
+  #   color = c("#009270",
+  #             "#DC143C",
+  #             "#0000CD",
+  #             "#000000",
+  #             "#c902c6",
+  #             "#FA6A03")
+  # } else{
+  #   color =  col.clusters
+  # }
 
   if (exists(ck$O_name, mode = "numeric")) {
     O <- get(ck$O_name, mode = "numeric")
@@ -67,22 +107,18 @@ plot.CirClust <- function(x,
     O <- eval(parse(text = ck$O_name))
   }
 
-  # x <- O
-  # y <- O
+  if(is.null(main)) main <- paste0(as.character(ck$O_name))
 
-
-  opar <- par(mar = c(0, 0, 0, 0))
-  # plot(x, y, type="p",
-  #     xlab=xlab, ylab=ylab, main=main, sub=sub)
   plot(
     c(0, 1),
     c(0, 0),
-    xlim = c(-1.5, 1.5),
-    ylim = c(-1.8, 1.8),
-    type = "l",
-    axes = FALSE,
-    xaxs = "i",
-    yaxs = "i",
+    main = main,
+    xlim = xlim,
+    ylim = ylim,
+    axes = axes,
+    xlab = xlab,
+    ylab = ylab,
+    sub = sub,
     ...
   )
   draw.circle(0, 0, c(1.15, 0.75), col = c("#fffdd0", "#FFFFFF"))
@@ -104,7 +140,7 @@ plot.CirClust <- function(x,
 
   clust <- ck$cluster
 
-  for(i in 1:length(U))
+  for(i in seq_along(U))
   {
     clust[which(ck$cluster == U[i])] <- count
 
@@ -112,7 +148,7 @@ plot.CirClust <- function(x,
   }
 
 
-  for (i in 1:length(ck$cluster))
+  for (i in seq_along(ck$cluster))
   {
     angle = O[i] / Circumference
 
@@ -121,14 +157,12 @@ plot.CirClust <- function(x,
                      c(0, 0),
                      angle = (angle * 2 * pi),
                      col = color[clust[i] %% length(color) + 1])
-
-
   }
 
 
 
 
-  for (i in 1:length(ck$Border.mid))
+  for (i in seq_along(ck$Border.mid))
   {
     angle = ck$Border.mid[i] / Circumference
 
@@ -145,7 +179,7 @@ plot.CirClust <- function(x,
   }
 
 
-  for (i in 1:length(ck$centers))
+  for (i in seq_along(ck$centers))
   {
     angle = ck$centers[i] / Circumference
 
@@ -158,9 +192,5 @@ plot.CirClust <- function(x,
 
   }
 
-  title(main = main, line = -1)
-
-  par(opar)
   invisible(ck)
-
 }

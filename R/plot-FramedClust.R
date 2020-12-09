@@ -1,17 +1,27 @@
 
-#' Plot Framed Data Clustering Results
+#' Plot Method for Framed Data Clustering
 #'
-#' Visualize results of framed clustering
+#' The \code{plot} method for framed data clustering result object.
+#' It visualizes clusters on the input data that are within a best
+#' frame.
 #'
 #' @import graphics
 #' @import stats
 #'
 #' @param x an object of class \code{FramedClust} as returned by \code{FramedClust}
 #' @param xlab a character string. The x-axis label for the plot.
+#'  Default is NULL.
 #' @param ylab a character string. The y-axis label for the plot.
+#'  Default is NULL.
 #' @param main a character string. The title for the plot.
+#'  Default is NULL.
 #' @param sub a character string. The subtitle for the plot.
-#' @param col.clusters a vector of colors, defined either by integers or by color names. If the length is shorter than the number of clusters, the colors will be reused.
+#'  Default is NULL.
+#' @param col.clusters a vector of colors, defined either by integers
+#'  or by color names. If the length is shorter than the number
+#'   of clusters, the colors will be reused. By default
+#'  the blue, red3, green3, orange, purple, brown colors are used
+#'  in the plot.
 #' @param ... other arguments associated with the plot function
 #'
 #'
@@ -22,9 +32,9 @@
 #' N <- 100
 #' X <- rchisq(N, 5)
 #' K <- 3
-#' frame.width <- 40
+#' frame.size <- 40
 #'
-#' result <- FramedClust(X, K, frame.width)
+#' result <- FramedClust(X, K, frame.size)
 #'
 #' plot(result)
 
@@ -35,7 +45,9 @@ plot.FramedClust <- function(x,
                              ylab = NULL,
                              main = NULL,
                              sub = NULL,
-                             col.clusters = NULL,
+                             col.clusters =  c(
+                               "blue", "red3", "green3", "orange", "purple", "brown"
+                             ),
                              ...)
 {
   ck <- x
@@ -46,17 +58,19 @@ plot.FramedClust <- function(x,
     X <- eval(parse(text = ck$X_name))
   }
 
-  if (is.null(col.clusters))
-  {
-    color = c("#009270",
-              "#DC143C",
-              "#0000CD",
-              "#03faf2",
-              "#c902c6",
-              "#FA6A03")
-  } else{
-    color = col.clusters
-  }
+  color <- col.clusters
+
+  #if (is.null(col.clusters))
+  #{
+  #  color = c("#009270",
+  #            "#DC143C",
+  #            "#0000CD",
+  #            "#03faf2",
+  #            "#c902c6",
+  #            "#FA6A03")
+  # } else{
+  #  color = col.clusters
+  # }
 
   I <- order(X)
 
@@ -64,18 +78,18 @@ plot.FramedClust <- function(x,
 
   cluster <- ck$cluster[I]
 
-  unique.clusters <- unique(na.omit(ck$cluster))
+  unique.clusters <- unique(na.omit(cluster))
 
   ID <- which(cluster == unique.clusters[1])[1]
 
   if(ID != 1) ID <- ID - 1
 
 
-  frame.width <- sum(!is.na(cluster))
+  frame.size <- sum(!is.na(cluster))
   K <- max(cluster, na.rm = TRUE)
 
   if(is.null(main)) main <- "Optimal framed clustering"
-  if(is.null(sub)) sub <- paste0("frame width = ", frame.width, " points, K = ", K)
+  if(is.null(sub)) sub <- paste0("frame size = ", frame.size, " points, K = ", K)
   if(is.null(xlab)) xlab <- paste0(as.character(ck$X_name))
   if(is.null(ylab)) ylab <- ""
   plot(x = c(min(X), max(X)), y=rep(2,2),
@@ -125,7 +139,7 @@ plot.FramedClust <- function(x,
 
   cluster_color <- color[unique.clusters %% length(color) + 1][o]
 
-  legend("topleft",
+  legend("topright",
          legend=cluster_name,
          col=cluster_color, lty=1, cex=0.8)
 

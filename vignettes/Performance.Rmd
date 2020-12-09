@@ -8,12 +8,11 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-
-
-
-```{r,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}
-
+  
+  
+  
+  
+```{r runtime-n, results='hide', message=FALSE, warning=FALSE, echo=FALSE}
 library(ggplot2)
 library(OptCirClust)
 library(knitr)
@@ -72,64 +71,45 @@ width <- length(Data_Points)/2
 Last <- length(Data_Points) - width 
 
 
-ptm <- proc.time()
+time <- system.time(result1 <- FramedClust(Data_Points,  K, width, First, Last, "linear.polylog"))
 
-  result1 <- FramedClust(Data_Points,  K, width, First, Last, "linear.polylog")
-
-  time <- proc.time() - ptm
-
-  FOCC <- c(FOCC,as.double(time[3]))
+FOCC <- c(FOCC,as.double(time[1]))
 
 
+time <- system.time(result2 <- FramedClust(Data_Points,  K, width, First, Last, "Ckmeans.1d.dp"))
+
+BOCC <- c(BOCC,as.double(time[1]))
 
 
+time <- system.time(result3 <- FramedClust(Data_Points,  K, width, First, Last, "kmeans"))
 
-
-
-  ptm <- proc.time()
-
-  result2 <- FramedClust(Data_Points,  K, width, First, Last, "Ckmeans.1d.dp")
-
-  time <- proc.time() - ptm
-
-  BOCC <- c(BOCC,as.double(time[3]))
+HEUC <- c(HEUC,as.double(time[1]))
 
 
 
 
-
-  ptm <- proc.time()
-
-  result3 <- FramedClust(Data_Points,  K, width, First, Last, "kmeans")
-
-  time <- proc.time() - ptm
-
-  HEUC <- c(HEUC,as.double(time[3]))
-
-  
-
-
-  number <- c(number, n*3)
+number <- c(number, n*3)
 
 
 
 }
 
+FOCC <- FOCC * 1000
+BOCC <- BOCC * 1000
+HEUC <- HEUC * 1000
 
 
- df1 <- data.frame("No_Points" = number, "FOCC" = FOCC, "BOCC" = BOCC, "HEUC" = HEUC)
+df1 <- data.frame("No_Points" = number, 
+                  "FOCC" = FOCC, "BOCC" = BOCC, "HEUC" = HEUC)
 
- df <- melt(df1, id.var='No_Points')
+df <- melt(df1, id.var='No_Points')
 
- plot1 <- ggplot(df, aes(x=No_Points, y=value, col=variable)) + geom_line() + geom_point(alpha=3) +
-   labs(y="Runtime (second)", x = "Number of points (N)") +
-  labs(colour = "Methods") + 
-  scale_y_continuous(trans = 'log2') +
-  ylim((min(FOCC,BOCC,HEUC)), (max(FOCC,BOCC,HEUC))) 
- 
- 
- 
+plot1 <- ggplot(df, aes(x=No_Points, y=value, col=variable)) + geom_line() + geom_point(alpha=3) +
+labs(y = "Runtime (millisecond)", x = "Number of points (N)") +
+labs(colour = "Methods")
+```
 
+```{r runtime-k,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}
 
 FOCC <- c()
 
@@ -168,65 +148,64 @@ for(K in seq(10,100,10))
 {
 
   ptm <- proc.time()
-
+  
   result1 <- FramedClust(Data_Points,  K, width, First, Last, "linear.polylog")
-
+  
   time <- proc.time() - ptm
-
+  
   FOCC <- c(FOCC,as.double(time[3]))
-
+  
   FOCC_SSQ <- c(FOCC_SSQ,result1$tot.withinss)
-
-
-
-
-
+  
+  
+  
+  
+  
   ptm <- proc.time()
-
+  
   result2 <-  FramedClust(Data_Points,  K, width, First, Last, "Ckmeans.1d.dp")
-
+  
   time <- proc.time() - ptm
-
+  
   BOCC <- c(BOCC,as.double(time[3]))
-
+  
   BOCC_SSQ <- c(BOCC_SSQ,result2$tot.withinss)
-
-
-
+  
+  
+  
   ptm <- proc.time()
-
+  
   result3 <- FramedClust(Data_Points,  K, width, First, Last, "kmeans")
-
+  
   time <- proc.time() - ptm
-
+  
   HEUC <- c(HEUC,as.double(time[3]))
-
+  
   HEUC_SSQ <- c(HEUC_SSQ,result3$tot.withinss)
-
-
+  
+  
   clusters <- c(clusters, K)
-
-
+  
 
 }
 
 
 
+FOCC <- FOCC * 1000
+BOCC <- BOCC * 1000
+HEUC <- HEUC * 1000
 
-
-df1 <- data.frame("No_Clusters" = clusters, "FOCC" = FOCC, "BOCC" = BOCC, "HEUC" = HEUC)
+df1 <- data.frame("No_Clusters" = clusters, 
+                  "FOCC" = FOCC, "BOCC" = BOCC, "HEUC" = HEUC)
 
 df <- melt(df1, id.var='No_Clusters')
 
 plot2 <- ggplot(df, aes(x=No_Clusters, y=value, col=variable)) + geom_line() + geom_point(alpha=3) +
-   labs(y="Runtime (seccond)", x = "Number of clusters (K)") + labs(colour = "Methods") + scale_y_continuous(trans = 'log2')
+labs(y = "Runtime (milliseccond)", x = "Number of clusters (K)") + labs(colour = "Methods") 
+```
 
 
-
-
-
-
-
+```{r SSQ,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}
 
 
 df1 <- data.frame("No_Clusters" = clusters, "FOCC" = FOCC_SSQ, "BOCC" = BOCC_SSQ, "HEUC" = HEUC_SSQ)
@@ -237,13 +216,14 @@ df$mysize <- rep(0, nrow(df))
 
 df$mysize[df$variable=="FOCC"] <- 1
 plot3 <- ggplot(df, aes(x=No_Clusters, y=value, col=variable, size=mysize)) + geom_line() + geom_point(alpha=3) +
-  labs(y="Within-cluster sum of squared distances", x = "Number of clusters (K)") + labs(colour = "Methods") +
-  scale_size(range = c(2, 4), guide="none") + scale_y_continuous(trans = 'log2')
+labs(y="Within-cluster sum of squared distances", x = "Number of clusters (K)") + labs(colour = "Methods") +
+scale_size(range = c(2, 4), guide="none") + 
+  scale_y_continuous(trans = 'log2')
 
 
 
- 
- 
+
+
 
 
 ```
@@ -259,11 +239,7 @@ We illustrate the runtime and quality of three circular data clustering algorith
 The runtime of both optimal and heuristic algorithms increases with the number of points in the circular data. Empirical runtime of the three algorithms as a function of the number of points $N$ are shown in the figure below. Both the HEUC and the BOCC algorithms increase at a quadratic rate. In contrast, the runtime of FOCC increases at a linear poly-logarithmic rate. Runtime is crucial for processing large datasets. 
 
 ```{r results='hide', message=FALSE, warning=FALSE, echo=FALSE}
-library(ggplot2)
-
 plot(plot1)
-
-
 ```
 
 
@@ -273,10 +249,7 @@ plot(plot1)
 The runtime is also affected by the number of clusters $K$ inside the circular data. The figure below shows this effect on the three algorithms. Empirical runtime of both HEUC and BOCC increases at a similar rate to FOCC over an increasing $K$. 
 
 ```{r,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}
-library(ggplot2)
-
 plot(plot2)
-
 ```
 
 
@@ -285,11 +258,7 @@ plot(plot2)
 
 The within-cluster sum of squared distances (SSQ) indicates the compactness of a cluster. A low value of SSQ suggests a good compact clustering outcome. The last figure shows the change in SSQ value with number of clusters $K$ in the data. The SSQ values of BOCC and FOCC always remain no more than that of the HEUC algorithm. This indicates the optimal BOCC and FOCC algorithms identify better clusters than the heuristic HEUC algorithm. The advantage of FOCC and BOCC over HEUC in SSQ gradually increases with $K$. 
 ```{r,  results='hide', message=FALSE, warning=FALSE, echo=FALSE}
-library(ggplot2)
-
-
 plot(plot3)
-
 ```
 
 

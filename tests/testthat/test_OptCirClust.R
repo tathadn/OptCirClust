@@ -7,7 +7,9 @@ context("Framed optimal clustering on simple and random data")
 test_that("Framed optimal clustering", {
   x <- c(-1, 2, 4, 5, 6)
   result <- Ckmeans.1d.dp(x, 3, method = "linear")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 3, frame.size = 5,
+                        first.frame = 1, last.frame = 1,
+                        method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -16,7 +18,8 @@ test_that("Framed optimal clustering", {
 
   x <- c(-.9, 1, 1.1, 1.9, 2, 2.1)
   result <- Ckmeans.1d.dp(x, 3, method = "linear")
-  output <- FramedClust(X=x, K = 3, frame.width = 6,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 3, frame.size = 6, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
 
   expect_equal(output$tot.withinss, result$tot.withinss)
@@ -27,7 +30,8 @@ test_that("Framed optimal clustering", {
   x <- c(-1, 2,-1, 2, 4, 5, 6,-1, 2,-1)
 
   result <- Ckmeans.1d.dp(x, 3, method = "linear")
-  output <- FramedClust(X=x, K = 3, frame.width = 10,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 3, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -36,7 +40,8 @@ test_that("Framed optimal clustering", {
 
   x <- c(3, 2,-5.4, 0.1)
   result <- Ckmeans.1d.dp(x, 4, method = "linear")
-  output <- FramedClust(X=x, K = 4, frame.width = 4,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 4, frame.size = 4, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -46,7 +51,8 @@ test_that("Framed optimal clustering", {
 
   x <- 1:10
   result <- Ckmeans.1d.dp(x, 2, method = "linear")
-  output <- FramedClust(X=x, K = 2, frame.width = 10,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 2, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -56,7 +62,8 @@ test_that("Framed optimal clustering", {
 
   x <- c(-2.5,-2.5,-2.5,-2.5)
   result <- Ckmeans.1d.dp(x, 1, method = "linear")
-  output <- FramedClust(X=x, K = 1, frame.width = 4,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 1, frame.size = 4, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -65,7 +72,8 @@ test_that("Framed optimal clustering", {
 
   x <- rep(1, 100)
   result <- Ckmeans.1d.dp(x, 1, method = "linear")
-  output <- FramedClust(X=x, K = 1, frame.width = 100,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 1, frame.size = 100, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -74,14 +82,16 @@ test_that("Framed optimal clustering", {
   x <-
     c(-3, 2.2,-6, 7, 9, 11,-6.3, 75, 82.6, 32.3,-9.5, 62.5, 7, 95.2)
   result <- Ckmeans.1d.dp(x, 8, method = "linear")
-  output <- FramedClust(X=x, K = 8, frame.width = 14,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 8, frame.size = 14, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
 
   x <- c(3.5, 3.6, 3.7, 3.1, 1.1, 0.9, 0.8, 2.2, 1.9, 2.1)
   result <- Ckmeans.1d.dp(x, 3, method = "linear")
-  output <- FramedClust(X=x, K = 3, frame.width = 10,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 3, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -91,7 +101,8 @@ test_that("Framed optimal clustering", {
 
   x <- cos((-10:10))
   result <- Ckmeans.1d.dp(x, 2, method = "linear")
-  output <- FramedClust(X=x, K = 2, frame.width = 21,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 2, frame.size = 21, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -100,7 +111,8 @@ test_that("Framed optimal clustering", {
   x <- dgamma(seq(1, 10, by = 0.5), shape = 2, rate = 1)
 
   result <- Ckmeans.1d.dp(x, 3, method = "linear")
-  output <- FramedClust(X=x, K = 3, frame.width = 19,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  output <- FramedClust(X=x, K = 3, frame.size = 19, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -115,114 +127,138 @@ test_that("Framed optimal clustering", {
 
 
   x <- c(-1, 2, 4, 5, 6)
-  result <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
- # expect_equal(output$Border, result$Border)
+  # expect_equal(output$Border, result$Border)
 
 
 
   x <- c(-.9, 1, 1.1, 1.9, 2, 2.1)
-  result <- FramedClust(X=x, K = 3, frame.width = 6,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 6,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 6, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 6, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
 
   x <- c(-1, 2,-1, 2, 4, 5, 6,-1, 2,-1)
 
-  result <- FramedClust(X=x, K = 3, frame.width = 10,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 10,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
 
   x <- c(3, 2,-5.4, 0.1)
-  result <- FramedClust(X=x, K = 4, frame.width = 4,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 4, frame.width = 4,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 4, frame.size = 4, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 4, frame.size = 4, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
 
 
   x <- 1:10
-  result <- FramedClust(X=x, K = 2, frame.width = 10,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 2, frame.width = 10,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 2, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 2, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
 
 
   x <- c(-2.5,-2.5,-2.5,-2.5)
-  result <- FramedClust(X=x, K = 1, frame.width = 4,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 1, frame.width = 4,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 1, frame.size = 4, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 1, frame.size = 4, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
 
   x <- rep(1, 100)
-  result <- FramedClust(X=x, K = 1, frame.width = 100,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 1, frame.width = 100,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 1, frame.size = 100, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 1, frame.size = 100, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
   x <-
     c(-3, 2.2,-6, 7, 9, 11,-6.3, 75, 82.6, 32.3,-9.5, 62.5, 7, 95.2)
-  result <- FramedClust(X=x, K = 8, frame.width = 14,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 8, frame.width = 14,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 8, frame.size = 14, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 8, frame.size = 14, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
   x <- c(3.5, 3.6, 3.7, 3.1, 1.1, 0.9, 0.8, 2.2, 1.9, 2.1)
-  result <- FramedClust(X=x, K = 3, frame.width = 10,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 10,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 10, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
 
 
   x <- cos((-10:10))
-  result <- FramedClust(X=x, K = 2, frame.width = 21,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 2, frame.width = 21,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 2, frame.size = 21, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 2, frame.size = 21, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
- # expect_equal(output$Border, result$Border)
+  # expect_equal(output$Border, result$Border)
 
 
   x <- dgamma(seq(1, 10, by = 0.5), shape = 2, rate = 1)
 
-  result <- FramedClust(X=x, K = 3, frame.width = 19,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 19,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 19, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 19, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
   x <-
     c(rnorm(50, sd = 0.3),
       rnorm(50, mean = 10, sd = 0.3),
       rnorm(50, mean = 20, sd = 0.3))
 
-  result <- FramedClust(X=x, K = 3, frame.width = 150,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 150,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 150, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 150, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 
   x <-
@@ -230,11 +266,13 @@ test_that("Framed optimal clustering", {
       rnorm(50, mean = 1, sd = 0.3),
       rnorm(50, mean = 2, sd = 0.3))
 
-  result <- FramedClust(X=x, K = 3, frame.width = 150,  first.frame = 1,last.frame = 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 150,  first.frame = 1,last.frame = 1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 150, first.frame = 1,
+                        last.frame = 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 150, first.frame = 1,
+                        last.frame = 1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
-#  expect_equal(output$Border, result$Border)
+  #  expect_equal(output$Border, result$Border)
 
 })
 
@@ -247,8 +285,10 @@ context("Framed optimal clustering on more examples")
 test_that("Brute force vs fast optimal framed clustering", {
   x <- c(1:10)
 
-  result <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 5, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 5, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 5, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 5, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -256,15 +296,19 @@ test_that("Brute force vs fast optimal framed clustering", {
   x <- c(1:100)
 
 
-  result <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 95, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 95, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 95, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 95, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
   x <- c(1.5, 2.9, 3.4, 5.6, 6.7, 6.8, 7.9, 8.2, 9.5, 10.56)
 
-  result <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 5, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 5, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 5, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 5, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -295,8 +339,10 @@ test_that("Brute force vs fast optimal framed clustering", {
     )
 
 
-  result <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 15, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 15, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 15, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 15, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -306,8 +352,10 @@ test_that("Brute force vs fast optimal framed clustering", {
   x <- seq(1, 100, by = 2)
 
 
-  result <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 45, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 45, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 45, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 45, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -315,8 +363,10 @@ test_that("Brute force vs fast optimal framed clustering", {
   x <- seq(1, 100, by = 0.5)
 
 
-  result <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 194, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 3, frame.width = 5,  first.frame = 1,last.frame = 194, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 194, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 3, frame.size = 5, first.frame = 1,
+                        last.frame = 194, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -325,16 +375,20 @@ test_that("Brute force vs fast optimal framed clustering", {
   x <- seq(1, 100, by = 0.5)
 
 
-  result <- FramedClust(X=x, K = 10, frame.width = length(x) / 2 ,  first.frame = 1,last.frame = length(x) /2, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 10, frame.width = length(x) / 2 ,  first.frame = 1,last.frame = length(x) /2, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 10, frame.size = length(x) / 2 , first.frame = 1,
+                        last.frame = length(x) /2, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 10, frame.size = length(x) / 2 , first.frame = 1,
+                        last.frame = length(x) /2, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
   x <- seq(1, 1000, by = 0.5)
 
 
-  result <- FramedClust(X=x, K = 10, frame.width = length(x) / 2 ,  first.frame = 1,last.frame = length(x) - length(x) /2 - 1, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x, K = 10, frame.width = length(x) / 2 ,  first.frame = 1,last.frame = length(x) - length(x) /2 -1, method = "linear.polylog")
+  result <- FramedClust(X=x, K = 10, frame.size = length(x) / 2 , first.frame = 1,
+                        last.frame = length(x) - length(x) /2 - 1, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x, K = 10, frame.size = length(x) / 2 , first.frame = 1,
+                        last.frame = length(x) - length(x) /2 -1, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 })
@@ -349,8 +403,10 @@ test_that("Circular clustering", {
 
   x1 <- c(x, (x + 40))
 
-  result <- FramedClust(X=x1, K = 3, frame.width = length(x) / 2,  first.frame = 1,last.frame =  length(x) -  length(x) /2, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x1, K = 3, frame.width = length(x) / 2,  first.frame = 1,last.frame =  length(x) -  length(x) /2, method = "linear.polylog")
+  result <- FramedClust(X=x1, K = 3, frame.size = length(x) / 2, first.frame = 1,
+                        last.frame =  length(x) -  length(x) /2, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x1, K = 3, frame.size = length(x) / 2, first.frame = 1,
+                        last.frame =  length(x) -  length(x) /2, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -363,8 +419,10 @@ test_that("Circular clustering", {
   x1 <- c(x, (x + 40))
 
 
-  result <- FramedClust(X=x1, K = 3, frame.width = length(x1) / 2,  first.frame = 1,last.frame = length(x1) - length(x1) /2, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x1, K = 3, frame.width = length(x1) / 2,  first.frame = 1,last.frame = length(x1) - length(x1) /2, method = "linear.polylog")
+  result <- FramedClust(X=x1, K = 3, frame.size = length(x1) / 2, first.frame = 1,
+                        last.frame = length(x1) - length(x1) /2, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x1, K = 3, frame.size = length(x1) / 2, first.frame = 1,
+                        last.frame = length(x1) - length(x1) /2, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -377,8 +435,10 @@ test_that("Circular clustering", {
   x1 <- c(x, (x + 30))
 
 
-  result <- FramedClust(X=x1, K = 3, frame.width = length(x1) / 2,  first.frame = 1,last.frame = length(x1) - length(x1) /2, method = "Ckmeans.1d.dp")
-  output <- FramedClust(X=x1, K = 3, frame.width = length(x1) / 2,  first.frame = 1,last.frame = length(x1) - length(x1) /2, method = "linear.polylog")
+  result <- FramedClust(X=x1, K = 3, frame.size = length(x1) / 2,
+                        first.frame = 1, last.frame = length(x1) - length(x1) /2, method = "Ckmeans.1d.dp")
+  output <- FramedClust(X=x1, K = 3, frame.size = length(x1) / 2,
+                        first.frame = 1, last.frame = length(x1) - length(x1) /2, method = "linear.polylog")
 
   expect_equal(output$tot.withinss, result$tot.withinss)
 
@@ -648,4 +708,15 @@ test_that("Circular clustering", {
   expect_equal(output$tot.withinss, result$tot.withinss)
 
 
+})
+
+test_that("Framed clustering", {
+
+  result <- FramedClust(1:10, 2, 4, 2, 7)
+  output <- FramedClust(1:10, 2, 4, 2, 7,"Ckmeans.1d.dp")
+  expect_equal(output$tot.withinss, result$tot.withinss)
+
+  result <- FramedClust(1:10, 2, 4, 2, 6)
+  output <- FramedClust(1:10, 2, 4, 2, 6,"Ckmeans.1d.dp")
+  expect_equal(output$tot.withinss, result$tot.withinss)
 })

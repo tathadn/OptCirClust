@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-FramedClust.R
 \name{plot.FramedClust}
 \alias{plot.FramedClust}
-\title{Plot Framed Data Clustering Results}
+\title{Plot Method for Framed Data Clustering}
 \usage{
 \method{plot}{FramedClust}(
   x,
@@ -10,22 +10,30 @@
   ylab = NULL,
   main = NULL,
   sub = NULL,
-  col.clusters = NULL,
+  col.clusters = c("blue", "red3", "green3", "orange", "purple", "brown"),
   ...
 )
 }
 \arguments{
 \item{x}{an object of class \code{FramedClust} as returned by \code{FramedClust}}
 
-\item{xlab}{a character string. The x-axis label for the plot.}
+\item{xlab}{a character string. The x-axis label for the plot.
+Default is NULL.}
 
-\item{ylab}{a character string. The y-axis label for the plot.}
+\item{ylab}{a character string. The y-axis label for the plot.
+Default is NULL.}
 
-\item{main}{a character string. The title for the plot.}
+\item{main}{a character string. The title for the plot.
+Default is NULL.}
 
-\item{sub}{a character string. The subtitle for the plot.}
+\item{sub}{a character string. The subtitle for the plot.
+Default is NULL.}
 
-\item{col.clusters}{a vector of colors, defined either by integers or by color names. If the length is shorter than the number of clusters, the colors will be reused.}
+\item{col.clusters}{a vector of colors, defined either by integers
+or by color names. If the length is shorter than the number
+ of clusters, the colors will be reused. By default
+the blue, red3, green3, orange, purple, brown colors are used
+in the plot.}
 
 \item{...}{other arguments associated with the plot function}
 }
@@ -34,15 +42,17 @@ An object of class \code{"FramedClust"},
 identical to the input \code{x}
 }
 \description{
-Visualize results of framed clustering
+The \code{plot} method for framed data clustering result object.
+It visualizes clusters on the input data that are within a best
+frame.
 }
 \examples{
 N <- 100
 X <- rchisq(N, 5)
 K <- 3
-frame.width <- 40
+frame.size <- 40
 
-result <- FramedClust(X, K, frame.width)
+result <- FramedClust(X, K, frame.size)
 
 plot(result)
 }

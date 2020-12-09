@@ -18,10 +18,9 @@ Circular datasets can be obtained from different sources, including simulated da
 ```{r,  message=FALSE, warning=FALSE}
 library(OptCirClust)
 
-O = c(1,2,10,11,20,21,31,32)
-K = 3
-Circumference = 32
-
+O = rnorm(100)
+K = 5
+Circumference = 6
 ```
 
 
@@ -37,7 +36,6 @@ result_FOCC <- CirClust(O, K, Circumference, method = "FOCC")
 result_BOCC <- CirClust(O, K, Circumference, method = "BOCC")
 
 # The slow and heuristic HEUC:
-set.seed(1)
 result_HEUC <- CirClust(O, K, Circumference, method = "HEUC")
 ```
 
@@ -47,11 +45,15 @@ result_HEUC <- CirClust(O, K, Circumference, method = "HEUC")
 The clustering outcomes obtained from the `CirClust` function can be visualized using the `plot` function.
 
 ```{r,  message=FALSE, warning=FALSE}
-plot(result_FOCC, main = "FOCC: optimal")
+opar <- par(mar=c(0,0,2,0))
 
-plot(result_BOCC, main = "BOCC: brute force")
+plot(result_FOCC, main = "FOCC: fast and optimal\n***Recommended***")
 
-plot(result_HEUC, main = "HEUC: heuristic")
+plot(result_BOCC, main = "BOCC: quadratic time")
+
+plot(result_HEUC, main = "HEUC: heuristic\nnot always optimal")
+
+par(opar)
 ```
 
 
