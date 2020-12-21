@@ -28,6 +28,10 @@
 #'    Default is from -1.75 to 1.75.
 #' @param ylim range of the y axis in the plot.
 #'    Default is from -1.75 to 1.75.
+#' @param fill the color to fill inside the ring as the background
+#' of data points.
+#' @param border the color to draw cluster borders.
+#' @param border.lty the line type to draw cluster borders.
 #' @param ... other arguments associated with the plot function
 #'
 #'
@@ -41,7 +45,7 @@
 #' Circumference <- 7
 #' O <- runif(n, 0, Circumference)
 #' result <- CirClust(O, K=3, Circumference=Circumference)
-#' plot(result, main="Example 1. Circular clustering")
+#' plot(result, fill="mintcream", main="Example 1. Circular clustering")
 #'
 #'
 #' # Example 2. Circular data clustering
@@ -53,11 +57,11 @@
 #'
 #' result <- CirClust(O, K, Circumference, method = "FOCC")
 #'
-#' color <- c("#0000CD","#808080", "#DC143C")
+#' color <- c("royalblue", "green3", "firebrick") # c("#0000CD","#808080", "#DC143C")
 #'
 #' par(mar=c(1,1,2,1))
 #'
-#' plot(result, col.clusters = color,
+#' plot(result, col.clusters = color, fill="floralwhite",
 #'      main="Example 2. Circular clustering")
 #'
 #'
@@ -66,7 +70,8 @@
 #' period <- 5.2
 #' O <- rnorm(n)
 #' result <- CirClust(O, K=5, Circumference=period)
-#' plot(result, main="Example 3. Periodic clustering")
+#' plot(result, fill="navy", border="gray", border.lty="dotted",
+#'      main="Example 3. Periodic clustering")
 #'
 #' par(opar)
 
@@ -83,6 +88,9 @@ plot.CirClust <- function(
   axes = FALSE,
   xlim = c(-1.75, 1.75),
   ylim = c(-1.75, 1.75),
+  fill = "floralwhite",
+  border = "gray36",
+  border.lty = "dotted",
   ...)
 {
   ck <- x
@@ -121,7 +129,7 @@ plot.CirClust <- function(
     sub = sub,
     ...
   )
-  draw.circle(0, 0, c(1.15, 0.75), col = c("#fffdd0", "#FFFFFF"))
+  draw.circle(0, 0, c(1.15, 0.75), col = c(fill, "#FFFFFF"))
 
 
 
@@ -171,8 +179,8 @@ plot.CirClust <- function(
       1.25,
       c(0, 0),
       angle = (angle * 2 * pi),
-      col = "#000000",
-      lty = "dotdash",
+      col = border,
+      lty = border.lty,
       lwd = 2
     )
 

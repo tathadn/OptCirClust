@@ -14,6 +14,9 @@
   axes = FALSE,
   xlim = c(-1.75, 1.75),
   ylim = c(-1.75, 1.75),
+  fill = "floralwhite",
+  border = "gray36",
+  border.lty = "dotted",
   ...
 )
 }
@@ -44,6 +47,13 @@ Default is from -1.75 to 1.75.}
 \item{ylim}{range of the y axis in the plot.
 Default is from -1.75 to 1.75.}
 
+\item{fill}{the color to fill inside the ring as the background
+of data points.}
+
+\item{border}{the color to draw cluster borders.}
+
+\item{border.lty}{the line type to draw cluster borders.}
+
 \item{...}{other arguments associated with the plot function}
 }
 \value{
@@ -61,7 +71,7 @@ n <- 100
 Circumference <- 7
 O <- runif(n, 0, Circumference)
 result <- CirClust(O, K=3, Circumference=Circumference)
-plot(result, main="Example 1. Circular clustering")
+plot(result, fill="mintcream", main="Example 1. Circular clustering")
 
 
 # Example 2. Circular data clustering
@@ -73,11 +83,11 @@ Circumference <- 28
 
 result <- CirClust(O, K, Circumference, method = "FOCC")
 
-color <- c("#0000CD","#808080", "#DC143C")
+color <- c("royalblue", "green3", "firebrick") # c("#0000CD","#808080", "#DC143C")
 
 par(mar=c(1,1,2,1))
 
-plot(result, col.clusters = color,
+plot(result, col.clusters = color, fill="floralwhite",
      main="Example 2. Circular clustering")
 
 
@@ -86,7 +96,8 @@ n <- 100
 period <- 5.2
 O <- rnorm(n)
 result <- CirClust(O, K=5, Circumference=period)
-plot(result, main="Example 3. Periodic clustering")
+plot(result, fill="navy", border="gray", border.lty="dotted",
+     main="Example 3. Periodic clustering")
 
 par(opar)
 }

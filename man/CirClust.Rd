@@ -27,9 +27,7 @@ An object of class \code{"CirClust"} which has a \code{plot}
 
 
 
-\item{ID}{the starting index of the frame with minimum SSQ}
 
-\item{Border}{the borders of \code{K} clusters}
 
 \item{cluster}{a vector of clusters assigned to each element in \code{O}.
 Each cluster is indexed by an integer from 1 to \code{K}.}
@@ -49,13 +47,22 @@ This statistic is not dependent on the clustering result.}
 \item{betweenss}{the	sum of squared distances between each cluster mean and sample mean.
 This statistic is maximized given the number of clusters.}
 
+\item{ID}{the starting index of the frame with minimum SSQ}
+
+\item{Border}{the borders of \code{K} clusters}
+
+\item{Border.mid}{the middle point of the last and first points of two consequitive clusters.   }
+
 \item{O_name}{a character string. The actual name of the \code{O} argument.}
+
+\item{Circumference}{ the circumfarence of the circular or periodic data.}
 }
 \description{
 Perform clustering on circular data to minimize the
   within-cluster sum of squared distances.
 }
 \details{
+By circular data, we broadly refer to data points on any non-self-intersecting loop.
 In clustering \eqn{N} circular points into \eqn{K} clusters, the "FOCC" algorithm
 is reproducible with runtime \eqn{O(K N \log^2 N)}{O(K N log^2 N)};
 The "HEUC" algorithm, not always reproducible, calls the \code{kmeans} function repeatedly;

@@ -13,7 +13,7 @@ The function to perform fast optimal circular data clustering is `CirClust()`. T
 
 ### When to use the package
 
-One can use the algorithms to characterize events along circular DNA molecules, circular RNA molecules, and circular genomes of bacteria, chloroplast, and mitochondria. One can also cluster climate data along any given longitude or latitude. Periodic data clustering can be formulated as circular clustering.
+One can use the algorithms to cluster circular, periodic, or framed data. Here circular data broadly refer to data points on any non-self-intersecting loop. Periodic data clustering can be formulated as circular clustering. Framed clustering finds one frame of fixed size that contains best clusters. One can use them to characterize events along circular DNA molecules, circular RNA molecules, and circular genomes of bacteria, chloroplast, and mitochondria. One can also cluster climate data along any given longitude or latitude.
 
 ### To download and install the package
 ```{r}

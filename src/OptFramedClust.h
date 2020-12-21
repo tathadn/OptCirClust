@@ -3,26 +3,28 @@
 //  OptClust_Log_Linear
 //
 //  Created by Tathagata Debnath on 6/15/20.
-//  Copyright © 2020 Tathagata Debnath. All rights reserved.
+//  Copyright © 2020 Tathagata Debnath and Joe Song.
+//  All rights reserved.
 //  Revised by Joe Song.
 
-#include <stdio.h>
+// #include <stdio.h>
+// #include <cmath>
+// #include <cassert>
+// #include <cstring>
+// #include <iostream>
+// #include <string>
+// #include <list>
+
 #include <vector>
-#include <climits>
+#include <limits>
 #include <algorithm>
-#include <cmath>
-#include <cassert>
-#include <string>
-#include <cstring>
-#include <list>
-#include <iostream>
+
 using namespace std;
 
 struct frame_info
 {
   double ssq = std::numeric_limits<double>::infinity(); // 1.79769e+308;
   int Frame_ID = -1;
-
 };
 
 struct clustering
@@ -32,7 +34,7 @@ struct clustering
   std::vector<int> Borders;
   std::vector<double> centers;
   std::vector<double> size;
-  double totss = 1.79769e+308;
+  double totss = std::numeric_limits<double>::infinity(); //1.79769e+308;
   std::vector<double> withinss;
 
 
@@ -95,8 +97,8 @@ double ssq(
 
 void backtrack(
     std::vector< std::vector<int> > & J,
-    std::vector<int> & B,
-    int K, int N);
+    std::vector<int> & B, int K, int N
+);
 
 
 

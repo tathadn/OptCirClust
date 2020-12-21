@@ -1,10 +1,10 @@
 ---
-title: "Tutorial on Framed Clustering"
+title: "Tutorial on optimal framed clustering"
 author: "Tathagata Debnath and Joe Song"
-date: "Created: 2020-11-29"
+date: "Updated: 2020-12-12; Created: 2020-12-03"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Tutorial on Framed Clustering}
+  %\VignetteIndexEntry{Tutorial on optimal framed clustering}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -48,9 +48,9 @@ The clustering outcomes obtained from the `FramedClust` function can be visualiz
 ```{r,  message=FALSE, warning=FALSE, fig.width = 5, fig.asp = .92}
 plot(result_linear.polylog, main = "linear.polylog: optimal\n***Recommended***")
 
-plot(result_Ckmeans.1d.dp, main = "Ckmeans.1d.dp: quadratic time")
+plot(result_Ckmeans.1d.dp, main = "Repeated Ckmeans.1d.dp: quadratic time\nalways optimal")
 
-plot(result_kmeans, main = "kmeans: heuristic\nnot always optimal")
+plot(result_kmeans, main = "Repeated kmeans: heuristic\nnot always optimal")
 ```
 
 

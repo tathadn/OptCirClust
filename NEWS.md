@@ -1,8 +1,26 @@
 # NEWS
 
+
+## Version 0.0.2
+
+    2020-12-12
+  
+  1. Fixed an issue of missing the C++ header file <limits> in the OptFramedClust.h.
+  2. Removed unused C++ header files.
+  3. Add three more parameters (fill, border, border.lty) to give the user more control over visualizing circular data clustering results by function plot.CirClust().
+  4. Updated vignettes and manuals.
+  
+  
+    2020-12-09
+  
+  1. Version 0.0.2 was created from version 0.0.1
+  2. Return value of CirClust are now fully documented in the manual according to the code.
+  3. Checked the return value of FramedClust. 
+  
+
 ## Version 0.0.1
     
-    2020-12-07:
+    2020-12-07
     
   1. Updated plot.CirClust() function to avoid calling `par()` function. 
      This will give the user full control of graphic parameters.
@@ -11,7 +29,7 @@
   3. Changed package title.
   
     
-    2020-12-04:
+    2020-12-04
     
   1. Included with the package a FASTA file downloaded from
      GenBank accession number CP019943.1, representing the
@@ -19,7 +37,7 @@
      in the vignette "Circular genome clustering".
   
   
-    2020-12-03:
+    2020-12-03
     
   1. Fixed issues with example(FramedClust).
   2. Optimized plot.CirClust output  

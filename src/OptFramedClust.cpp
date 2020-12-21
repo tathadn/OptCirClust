@@ -1,9 +1,10 @@
 //
 //  OptFramedClust.cpp
-//  Optimal framed clustering in log-linear time
+//  Optimal framed clustering in polylog-linear time
 //
 //  Created by Tathagata Debnath on 6/15/20.
-//  Copyright © 2020 Tathagata Debnath. All rights reserved.
+//  Copyright © 2020 Tathagata Debnath and Joe Song.
+//  All rights reserved.
 //  Revised by Joe Song.
 
 #include "OptFramedClust.h"
@@ -62,7 +63,9 @@ clustering MFC(std::vector<double> & Data_Points,
 
 
 
-    frame_info frame = BDP(  width,  K, First,  Last, Prev,  Next, S, J, sum_x, sum_x_sq, Cluster_Border);
+    frame_info frame = BDP(
+      width,  K, First,  Last, Prev,
+      Next, S, J, sum_x, sum_x_sq, Cluster_Border);
 
 
 
@@ -180,9 +183,15 @@ frame_info BDP( int width, int K,
 
 
 
-    frame_info frame_left = BDP( width,  K, First,  Middle_Frame - 1, Prev,  Middle_Frame, S, J, sum_x, sum_x_sq, Cluster_Border);
+    frame_info frame_left = BDP(
+      width,  K, First,  Middle_Frame - 1, Prev,  Middle_Frame,
+      S, J, sum_x, sum_x_sq, Cluster_Border
+    );
 
-    frame_info frame_right = BDP( width,  K,  Middle_Frame + 1, Last, Middle_Frame, Next, S, J,  sum_x, sum_x_sq, Cluster_Border);
+    frame_info frame_right = BDP(
+      width,  K,  Middle_Frame + 1, Last, Middle_Frame, Next,
+      S, J,  sum_x, sum_x_sq, Cluster_Border
+    );
 
 
 
@@ -290,7 +299,7 @@ void linear_clustering(std::vector< std::vector< double > > & S,
       {
         jmax = std::min(N-1, (Cluster_Border[Next][k-1] - Middle_Frame + 1) );
 
-        imax =  std::min(N-1, (Cluster_Border[Next][k] - Middle_Frame  ));
+        imax = std::min(N-1, (Cluster_Border[Next][k] - Middle_Frame  ));
 
       }
       else
